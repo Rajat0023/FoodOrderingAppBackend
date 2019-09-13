@@ -5,8 +5,8 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 @Entity
-@Table(name = "payment")
-public class Payment {
+@Table(name = "category")
+public class CategoryEntity {
 
     @Id
     @Column(name = "id")
@@ -19,9 +19,9 @@ public class Payment {
     @Size(max = 200)
     private String uuid;
 
-    @Column(name = "payment_name")
+    @Column(name = "category_name")
     @Size(max = 255)
-    private String paymentName;
+    private String categoryName;
 
     public Integer getId() {
         return Id;
@@ -39,11 +39,11 @@ public class Payment {
         this.uuid = uuid;
     }
 
-    public String getPaymentName() {
-        return paymentName;
+    public String getCategoryName() {
+        return categoryName;
     }
 
-    public void setPaymentName(String paymentName) {
-        this.paymentName = paymentName;
+    public void setCategoryName(String categoryName) {
+        this.categoryName = categoryName;
     }
 }

@@ -6,7 +6,7 @@ import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "restaurant_category")
-public class RestaurantCategory {
+public class RestaurantCategoryEntity {
 
   @Id
   @Column(name = "id")
@@ -17,12 +17,12 @@ public class RestaurantCategory {
     @OneToOne(cascade = CascadeType.REMOVE)
     @NotNull
     @JoinColumn(name = "restaurant_id", referencedColumnName = "id")
-    private Restaurant restaurantId;
+    private RestaurantEntity restaurantId;
 
     @ManyToOne(cascade = CascadeType.REMOVE)
     @NotNull
     @JoinColumn(name = "category_id", referencedColumnName = "id")
-    private Category categoryId;
+    private CategoryEntity categoryId;
 
     public Integer getId() {
         return Id;
@@ -32,19 +32,19 @@ public class RestaurantCategory {
         Id = id;
     }
 
-    public Restaurant getRestaurantId() {
+    public RestaurantEntity getRestaurantId() {
         return restaurantId;
     }
 
-    public void setRestaurantId(Restaurant restaurantId) {
+    public void setRestaurantId(RestaurantEntity restaurantId) {
         this.restaurantId = restaurantId;
     }
 
-    public Category getCategoryId() {
+    public CategoryEntity getCategoryId() {
         return categoryId;
     }
 
-    public void setCategoryId(Category categoryId) {
+    public void setCategoryId(CategoryEntity categoryId) {
         this.categoryId = categoryId;
     }
 }

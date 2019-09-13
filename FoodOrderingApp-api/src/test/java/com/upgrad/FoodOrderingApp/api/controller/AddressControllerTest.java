@@ -78,7 +78,7 @@
 //    @Test
 //    public void shouldNotSaveAddressWithNonExistingAccessToken() throws Exception {
 //        when(mockCustomerService.getCustomer("non_existing_access_token"))
-//                .thenThrow(new AuthorizationFailedException("ATHR-001", "Customer is not Logged in."));
+//                .thenThrow(new AuthorizationFailedException("ATHR-001", "CustomerEntity is not Logged in."));
 //
 //        mockMvc
 //                .perform(post("/address?content=my_address")
@@ -95,7 +95,7 @@
 //    @Test
 //    public void shouldNotSaveAddressWithSignedOutUser() throws Exception {
 //        when(mockCustomerService.getCustomer("database_accesstoken"))
-//                .thenThrow(new AuthorizationFailedException("ATHR-002", "Customer is logged out. Log in again to access this endpoint."));
+//                .thenThrow(new AuthorizationFailedException("ATHR-002", "CustomerEntity is logged out. Log in again to access this endpoint."));
 //
 //        mockMvc
 //                .perform(post("/address?content=my_address")
@@ -216,7 +216,7 @@
 //    @Test
 //    public void shouldNotDeleteAddressWithNonExistingAccessToken() throws Exception {
 //        when(mockCustomerService.getCustomer("non_existing_access_token"))
-//                .thenThrow(new AuthorizationFailedException("ATHR-001", "Customer is not Logged in."));
+//                .thenThrow(new AuthorizationFailedException("ATHR-001", "CustomerEntity is not Logged in."));
 //
 //        mockMvc
 //                .perform(delete("/address/address_id")
@@ -233,7 +233,7 @@
 //    @Test
 //    public void shouldNotDeleteAddressWithSignedOutUser() throws Exception {
 //        when(mockCustomerService.getCustomer("database_accesstoken"))
-//                .thenThrow(new AuthorizationFailedException("ATHR-002", "Customer is logged out. Log in again to access this endpoint."));
+//                .thenThrow(new AuthorizationFailedException("ATHR-002", "CustomerEntity is logged out. Log in again to access this endpoint."));
 //
 //        mockMvc
 //                .perform(delete("/address/address_id")
@@ -351,7 +351,7 @@
 //    @Test
 //    public void shouldNotGetAllAddressesWithNonExistingAccessToken() throws Exception {
 //        when(mockCustomerService.getCustomer("non_existing_access_token"))
-//                .thenThrow(new AuthorizationFailedException("ATHR-001", "Customer is not Logged in."));
+//                .thenThrow(new AuthorizationFailedException("ATHR-001", "CustomerEntity is not Logged in."));
 //
 //        mockMvc
 //                .perform(get("/address/customer")
@@ -368,7 +368,7 @@
 //    @Test
 //    public void shouldNotGetAllAddressesWithSignedOutUser() throws Exception {
 //        when(mockCustomerService.getCustomer("database_accesstoken"))
-//                .thenThrow(new AuthorizationFailedException("ATHR-002", "Customer is logged out. Log in again to access this endpoint."));
+//                .thenThrow(new AuthorizationFailedException("ATHR-002", "CustomerEntity is logged out. Log in again to access this endpoint."));
 //
 //        mockMvc
 //                .perform(get("/address/customer")

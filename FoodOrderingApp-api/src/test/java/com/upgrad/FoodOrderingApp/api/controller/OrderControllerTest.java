@@ -65,13 +65,13 @@
 //                .thenReturn(customerEntity);
 //
 //        final SaveOrderRequest saveOrderRequest = getSaveOrderRequest();
-//        when(mockPaymentService.getPaymentByUUID(saveOrderRequest.getPaymentId().toString()))
+//        when(mockPaymentService.getPaymentByUUID(saveOrderRequest.getPaymentEntityId().toString()))
 //                .thenReturn(new PaymentEntity());
 //        when(mockAddressService.getAddressByUUID(saveOrderRequest.getAddressId(), customerEntity))
 //                .thenReturn(new AddressEntity());
 //        when(mockRestaurantService.restaurantByUUID(saveOrderRequest.getRestaurantId().toString()))
 //                .thenReturn(new RestaurantEntity());
-//        when(mockOrderService.getCouponByCouponId(saveOrderRequest.getCouponId().toString()))
+//        when(mockOrderService.getCouponByCouponId(saveOrderRequest.getCouponEntityId().toString()))
 //                .thenReturn(new CouponEntity());
 //
 //        final OrderEntity orderEntity = new OrderEntity();
@@ -90,13 +90,13 @@
 //        verify(mockCustomerService, times(1))
 //                .getCustomer("database_accesstoken2");
 //        verify(mockPaymentService, times(1))
-//                .getPaymentByUUID(saveOrderRequest.getPaymentId().toString());
+//                .getPaymentByUUID(saveOrderRequest.getPaymentEntityId().toString());
 //        verify(mockAddressService, times(1))
 //                .getAddressByUUID(saveOrderRequest.getAddressId(), customerEntity);
 //        verify(mockRestaurantService, times(1))
 //                .restaurantByUUID(saveOrderRequest.getRestaurantId().toString());
 //        verify(mockOrderService, times(1))
-//                .getCouponByCouponId(saveOrderRequest.getCouponId().toString());
+//                .getCouponByCouponId(saveOrderRequest.getCouponEntityId().toString());
 //        verify(mockOrderService, times(1)).saveOrder(any());
 //        verify(mockOrderService, times(1)).saveOrderItem(any());
 //    }
@@ -105,7 +105,7 @@
 //    @Test
 //    public void shouldNotSaveOrderIfCustomerIsNotLoggedIn() throws Exception {
 //        when(mockCustomerService.getCustomer("invalid_auth"))
-//                .thenThrow(new AuthorizationFailedException("ATHR-001", "Customer is not Logged in."));
+//                .thenThrow(new AuthorizationFailedException("ATHR-001", "CustomerEntity is not Logged in."));
 //
 //        mockMvc
 //                .perform(post("/order")
@@ -128,7 +128,7 @@
 //    @Test
 //    public void shouldNotSaveOrderIfCustomerIsLoggedOut() throws Exception {
 //        when(mockCustomerService.getCustomer("invalid_auth"))
-//                .thenThrow(new AuthorizationFailedException("ATHR-002", "Customer is logged out. Log in again to access this endpoint."));
+//                .thenThrow(new AuthorizationFailedException("ATHR-002", "CustomerEntity is logged out. Log in again to access this endpoint."));
 //        mockMvc
 //                .perform(post("/order")
 //                        .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
@@ -177,7 +177,7 @@
 //                .thenReturn(new CustomerEntity());
 //
 //        final SaveOrderRequest saveOrderRequest = getSaveOrderRequest();
-//        when(mockPaymentService.getPaymentByUUID(saveOrderRequest.getPaymentId().toString()))
+//        when(mockPaymentService.getPaymentByUUID(saveOrderRequest.getPaymentEntityId().toString()))
 //                .thenThrow(new PaymentMethodNotFoundException("PNF-002", "No payment method found by this id"));
 //
 //        mockMvc
@@ -190,7 +190,7 @@
 //        verify(mockCustomerService, times(1))
 //                .getCustomer("database_accesstoken2");
 //        verify(mockPaymentService, times(1))
-//                .getPaymentByUUID(saveOrderRequest.getPaymentId().toString());
+//                .getPaymentByUUID(saveOrderRequest.getPaymentEntityId().toString());
 //        verify(mockAddressService, times(0)).getAddressByUUID(anyString(), any());
 //        verify(mockRestaurantService, times(0)).restaurantByUUID(anyString());
 //        verify(mockOrderService, times(1)).getCouponByCouponId(anyString());
@@ -209,7 +209,7 @@
 //                .thenReturn(customerEntity);
 //
 //        final SaveOrderRequest saveOrderRequest = getSaveOrderRequest();
-//        when(mockPaymentService.getPaymentByUUID(saveOrderRequest.getPaymentId().toString()))
+//        when(mockPaymentService.getPaymentByUUID(saveOrderRequest.getPaymentEntityId().toString()))
 //                .thenReturn(new PaymentEntity());
 //        when(mockAddressService.getAddressByUUID(saveOrderRequest.getAddressId(), customerEntity))
 //                .thenThrow(new AddressNotFoundException("ANF-003", "No address by this id"));
@@ -224,7 +224,7 @@
 //        verify(mockCustomerService, times(1))
 //                .getCustomer("database_accesstoken2");
 //        verify(mockPaymentService, times(1))
-//                .getPaymentByUUID(saveOrderRequest.getPaymentId().toString());
+//                .getPaymentByUUID(saveOrderRequest.getPaymentEntityId().toString());
 //        verify(mockAddressService, times(1))
 //                .getAddressByUUID(saveOrderRequest.getAddressId(), customerEntity);
 //        verify(mockRestaurantService, times(0)).restaurantByUUID(anyString());
@@ -244,7 +244,7 @@
 //                .thenReturn(customerEntity);
 //
 //        final SaveOrderRequest saveOrderRequest = getSaveOrderRequest();
-//        when(mockPaymentService.getPaymentByUUID(saveOrderRequest.getPaymentId().toString()))
+//        when(mockPaymentService.getPaymentByUUID(saveOrderRequest.getPaymentEntityId().toString()))
 //                .thenReturn(new PaymentEntity());
 //        when(mockAddressService.getAddressByUUID(saveOrderRequest.getAddressId(), customerEntity))
 //                .thenThrow(new AuthorizationFailedException("ATHR-004", "You are not authorized to view/update/delete any one else's address"));
@@ -259,7 +259,7 @@
 //        verify(mockCustomerService, times(1))
 //                .getCustomer("database_accesstoken2");
 //        verify(mockPaymentService, times(1))
-//                .getPaymentByUUID(saveOrderRequest.getPaymentId().toString());
+//                .getPaymentByUUID(saveOrderRequest.getPaymentEntityId().toString());
 //        verify(mockAddressService, times(1))
 //                .getAddressByUUID(saveOrderRequest.getAddressId(), customerEntity);
 //        verify(mockRestaurantService, times(0)).restaurantByUUID(anyString());
@@ -279,7 +279,7 @@
 //                .thenReturn(customerEntity);
 //
 //        final SaveOrderRequest saveOrderRequest = getSaveOrderRequest();
-//        when(mockPaymentService.getPaymentByUUID(saveOrderRequest.getPaymentId().toString()))
+//        when(mockPaymentService.getPaymentByUUID(saveOrderRequest.getPaymentEntityId().toString()))
 //                .thenReturn(new PaymentEntity());
 //        when(mockAddressService.getAddressByUUID(saveOrderRequest.getAddressId(), customerEntity))
 //                .thenReturn(new AddressEntity());
@@ -296,7 +296,7 @@
 //        verify(mockCustomerService, times(1))
 //                .getCustomer("database_accesstoken2");
 //        verify(mockPaymentService, times(1))
-//                .getPaymentByUUID(saveOrderRequest.getPaymentId().toString());
+//                .getPaymentByUUID(saveOrderRequest.getPaymentEntityId().toString());
 //        verify(mockAddressService, times(1))
 //                .getAddressByUUID(saveOrderRequest.getAddressId(), customerEntity);
 //        verify(mockRestaurantService, times(1))
@@ -317,13 +317,13 @@
 //                .thenReturn(customerEntity);
 //
 //        final SaveOrderRequest saveOrderRequest = getSaveOrderRequest();
-//        when(mockPaymentService.getPaymentByUUID(saveOrderRequest.getPaymentId().toString()))
+//        when(mockPaymentService.getPaymentByUUID(saveOrderRequest.getPaymentEntityId().toString()))
 //                .thenReturn(new PaymentEntity());
 //        when(mockAddressService.getAddressByUUID(saveOrderRequest.getAddressId(), customerEntity))
 //                .thenReturn(new AddressEntity());
 //        when(mockRestaurantService.restaurantByUUID(saveOrderRequest.getRestaurantId().toString()))
 //                .thenReturn(new RestaurantEntity());
-//        when(mockOrderService.getCouponByCouponId(saveOrderRequest.getCouponId().toString()))
+//        when(mockOrderService.getCouponByCouponId(saveOrderRequest.getCouponEntityId().toString()))
 //                .thenThrow(new CouponNotFoundException("CPF-002", "No coupon by this id"));
 //
 //        mockMvc
@@ -336,18 +336,32 @@
 //        verify(mockCustomerService, times(1))
 //                .getCustomer("database_accesstoken2");
 //        verify(mockPaymentService, times(0))
-//                .getPaymentByUUID(saveOrderRequest.getPaymentId().toString());
+//                .getPaymentByUUID(saveOrderRequest.getPaymentEntityId().toString());
 //        verify(mockAddressService, times(0))
 //                .getAddressByUUID(saveOrderRequest.getAddressId(), customerEntity);
 //        verify(mockRestaurantService, times(0))
 //                .restaurantByUUID(saveOrderRequest.getRestaurantId().toString());
 //        verify(mockOrderService, times(1))
-//                .getCouponByCouponId(saveOrderRequest.getCouponId().toString());
+//                .getCouponByCouponId(saveOrderRequest.getCouponEntityId().toString());
 //        verify(mockOrderService, times(0)).saveOrder(any());
 //        verify(mockOrderService, times(0)).saveOrderItem(any());
 //    }
 //
+
+
+
+
+
+
+
+
+
 //    // ------------------------------------------ GET /order ------------------------------------------
+
+
+
+
+
 //
 //    //This test case passes when you are able to retrieve all past orders placed by you
 //    @Test
@@ -385,7 +399,7 @@
 //    @Test
 //    public void shouldNotGetPlacedOrderDetailsIfCustomerIsNotLoggedIn() throws Exception {
 //        when(mockCustomerService.getCustomer("invalid_auth"))
-//                .thenThrow(new AuthorizationFailedException("ATHR-001", "Customer is not Logged in."));
+//                .thenThrow(new AuthorizationFailedException("ATHR-001", "CustomerEntity is not Logged in."));
 //        mockMvc
 //                .perform(get("/order")
 //                        .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
@@ -402,7 +416,7 @@
 //    @Test
 //    public void shouldNotGetPlacedOrderDetailsIfCustomerIsLoggedOut() throws Exception {
 //        when(mockCustomerService.getCustomer("invalid_auth"))
-//                .thenThrow(new AuthorizationFailedException("ATHR-002", "Customer is logged out. Log in again to access this endpoint."));
+//                .thenThrow(new AuthorizationFailedException("ATHR-002", "CustomerEntity is logged out. Log in again to access this endpoint."));
 //        mockMvc
 //                .perform(get("/order")
 //                        .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
@@ -431,8 +445,16 @@
 //        verify(mockOrderService, times(0)).getOrdersByCustomers(anyString());
 //    }
 //
+
+
+
+
 //    // ------------------------------------------ GET /order/coupon/{coupon_name} ------------------------------------------
 //
+
+
+
+
 //    //This test case passes when you are able to retrieve coupon details by coupon name.
 //    @Test
 //    public void shouldGetCouponByName() throws Exception {
@@ -458,7 +480,7 @@
 //    @Test
 //    public void shouldNotGetCouponByNameIfCustomerIsNotLoggedIn() throws Exception {
 //        when(mockCustomerService.getCustomer("invalid_auth"))
-//                .thenThrow(new AuthorizationFailedException("ATHR-001", "Customer is not Logged in."));
+//                .thenThrow(new AuthorizationFailedException("ATHR-001", "CustomerEntity is not Logged in."));
 //        mockMvc
 //                .perform(get("/order/coupon/myCoupon")
 //                        .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
@@ -475,7 +497,7 @@
 //    @Test
 //    public void shouldNotGetCouponByNameIfCustomerIsLoggedOut() throws Exception {
 //        when(mockCustomerService.getCustomer("invalid_auth"))
-//                .thenThrow(new AuthorizationFailedException("ATHR-002", "Customer is logged out. Log in again to access this endpoint."));
+//                .thenThrow(new AuthorizationFailedException("ATHR-002", "CustomerEntity is logged out. Log in again to access this endpoint."));
 //        mockMvc
 //                .perform(get("/order/coupon/myCoupon")
 //                        .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
@@ -512,7 +534,7 @@
 //                .thenReturn(new CustomerEntity());
 //
 //        when(mockOrderService.getCouponByCouponName(anyString()))
-//                .thenThrow(new CouponNotFoundException("CPF-002", "Coupon name field should not be empty"));
+//                .thenThrow(new CouponNotFoundException("CPF-002", "CouponEntity name field should not be empty"));
 //
 //        mockMvc
 //                .perform(get("/order/coupon/emptyString")
@@ -559,10 +581,10 @@
 //        request.setAddressId(addressId);
 //
 //        final UUID paymentId = UUID.randomUUID();
-//        request.setPaymentId(paymentId);
+//        request.setPaymentEntityId(paymentId);
 //
 //        final UUID couponId = UUID.randomUUID();
-//        request.setCouponId(couponId);
+//        request.setCouponEntityId(couponId);
 //
 //        final ItemQuantity itemQuantity = new ItemQuantity();
 //        itemQuantity.setPrice(786);
@@ -597,7 +619,7 @@
 //        restaurantEntity.setCustomerRating(3.4);
 //        restaurantEntity.setNumberCustomersRated(200);
 //        restaurantEntity.setPhotoUrl("someurl");
-//        restaurantEntity.setRestaurantName("Famous Restaurant");
+//        restaurantEntity.setRestaurantName("Famous RestaurantEntity");
 //
 //
 //        final String orderId = UUID.randomUUID().toString();

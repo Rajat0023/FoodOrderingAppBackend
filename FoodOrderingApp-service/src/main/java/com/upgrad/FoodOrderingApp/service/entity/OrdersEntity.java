@@ -3,11 +3,13 @@ package com.upgrad.FoodOrderingApp.service.entity;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Table(name = "orders")
-public class Orders {
+public class OrdersEntity {
 
     @Id
     @Column(name = "id")
@@ -22,14 +24,15 @@ public class Orders {
 
     @Column(name = "bill")
     @NotNull
-    private Float bill;
+    private BigDecimal bill;
+
 
     @OneToOne
     @JoinColumn(name = "coupon_id", referencedColumnName = "id")
-    private Coupon couponId;
+    private CouponEntity couponEntityId;
 
     @Column(name = "discount")
-    private Float discount;
+    private BigDecimal discount;
 
     @Column(name = "date")
     @NotNull
@@ -37,22 +40,36 @@ public class Orders {
 
     @OneToOne
     @JoinColumn(name = "payment_id", referencedColumnName = "id")
-    private Payment paymentId;
+    private PaymentEntity paymentEntityId;
 
-    @OneToOne(cascade = CascadeType.REMOVE)
+    @OneToOne(cascade = CascadeType.REMOVE)                   //this cascades the operation to child entity too(in this case only delete operation)
     @NotNull
     @JoinColumn(name = "customer_id", referencedColumnName = "id")
-    private Customer customerId;
+    private CustomerEntity customerId;
 
     @OneToOne
     @NotNull
     @JoinColumn(name = "address_id", referencedColumnName = "id")
-    private Address addressId;
+    private AddressEntity addressId;
 
     @OneToOne
     @NotNull
     @JoinColumn(name = "restaurant_id", referencedColumnName = "id")
-    private Restaurant restaurantId;
+    private RestaurantEntity restaurantId;
+
+
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<OrderItemEntity> orderItems;   //Doubt //how to get this transient child-entity also persisted
+
+
+
+    public List<OrderItemEntity> getOrderItems() {
+        return orderItems;
+    }
+
+    public void setOrderItems(List<OrderItemEntity> orderItems) {
+        this.orderItems = orderItems;
+    }
 
     public Integer getId() {
         return Id;
@@ -70,27 +87,27 @@ public class Orders {
         this.uuid = uuid;
     }
 
-    public Float getBill() {
+    public BigDecimal getBill() {
         return bill;
     }
 
-    public void setBill(Float bill) {
+    public void setBill(BigDecimal bill) {
         this.bill = bill;
     }
 
-    public Coupon getCouponId() {
-        return couponId;
+    public CouponEntity getCouponEntityId() {
+        return couponEntityId;
     }
 
-    public void setCouponId(Coupon couponId) {
-        this.couponId = couponId;
+    public void setCouponEntityId(CouponEntity couponEntityId) {
+        this.couponEntityId = couponEntityId;
     }
 
-    public Float getDiscount() {
+    public BigDecimal getDiscount() {
         return discount;
     }
 
-    public void setDiscount(Float discount) {
+    public void setDiscount(BigDecimal discount) {
         this.discount = discount;
     }
 
@@ -102,35 +119,35 @@ public class Orders {
         this.date = date;
     }
 
-    public Payment getPaymentId() {
-        return paymentId;
+    public PaymentEntity getPaymentEntityId() {
+        return paymentEntityId;
     }
 
-    public void setPaymentId(Payment paymentId) {
-        this.paymentId = paymentId;
+    public void setPaymentEntityId(PaymentEntity paymentEntityId) {
+        this.paymentEntityId = paymentEntityId;
     }
 
-    public Customer getCustomerId() {
+    public CustomerEntity getCustomerId() {
         return customerId;
     }
 
-    public void setCustomerId(Customer customerId) {
+    public void setCustomerId(CustomerEntity customerId) {
         this.customerId = customerId;
     }
 
-    public Address getAddressId() {
+    public AddressEntity getAddressId() {
         return addressId;
     }
 
-    public void setAddressId(Address addressId) {
+    public void setAddressId(AddressEntity addressId) {
         this.addressId = addressId;
     }
 
-    public Restaurant getRestaurantId() {
+    public RestaurantEntity getRestaurantId() {
         return restaurantId;
     }
 
-    public void setRestaurantId(Restaurant restaurantId) {
+    public void setRestaurantId(RestaurantEntity restaurantId) {
         this.restaurantId = restaurantId;
     }
 }

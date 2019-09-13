@@ -6,7 +6,7 @@ import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "restaurant")
-public class Restaurant {
+public class RestaurantEntity {
 
     @Id
     @Column(name = "id")
@@ -43,7 +43,7 @@ public class Restaurant {
     @OneToOne(cascade = CascadeType.REMOVE)
     @NotNull
     @JoinColumn(name = "address_id", referencedColumnName = "id")
-    private Address addressId;
+    private AddressEntity addressId;
 
     public Integer getId() {
         return Id;
@@ -101,11 +101,11 @@ public class Restaurant {
         this.numberOfCustomersRated = numberOfCustomersRated;
     }
 
-    public Address getAddressId() {
+    public AddressEntity getAddressId() {
         return addressId;
     }
 
-    public void setAddressId(Address addressId) {
+    public void setAddressId(AddressEntity addressId) {
         this.addressId = addressId;
     }
 }

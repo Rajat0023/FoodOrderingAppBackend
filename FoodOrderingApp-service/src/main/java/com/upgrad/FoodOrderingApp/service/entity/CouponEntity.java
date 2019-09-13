@@ -5,10 +5,11 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 @Entity
-@Table(name = "category")
-public class Category {
+@Table(name = "coupon")
+@NamedQuery(name = "query", query = "select c from Coupon c where c.couponName=:couponName")
+public class CouponEntity {
 
-    @Id
+    @javax.persistence.Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @NotNull
@@ -19,9 +20,13 @@ public class Category {
     @Size(max = 200)
     private String uuid;
 
-    @Column(name = "category_name")
+    @Column(name = "coupon_name")
     @Size(max = 255)
-    private String categoryName;
+    private String couponName;
+
+    @Column(name = "percent")
+    @NotNull
+    private Integer percent;
 
     public Integer getId() {
         return Id;
@@ -39,11 +44,19 @@ public class Category {
         this.uuid = uuid;
     }
 
-    public String getCategoryName() {
-        return categoryName;
+    public String getCouponName() {
+        return couponName;
     }
 
-    public void setCategoryName(String categoryName) {
-        this.categoryName = categoryName;
+    public void setCouponName(String couponName) {
+        this.couponName = couponName;
+    }
+
+    public Integer getPercent() {
+        return percent;
+    }
+
+    public void setPercent(Integer percent) {
+        this.percent = percent;
     }
 }

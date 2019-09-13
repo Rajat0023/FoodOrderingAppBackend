@@ -6,7 +6,7 @@ import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "item")
-public class Item {
+public class ItemEntity {
 
     @Id
     @Column(name = "id")

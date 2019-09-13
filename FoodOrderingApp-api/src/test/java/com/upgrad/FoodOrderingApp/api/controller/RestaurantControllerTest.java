@@ -74,7 +74,7 @@
 //                .perform(get("/restaurant/someRestaurantId").contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
 //                .andExpect(status().isOk())
 //                .andExpect(jsonPath("id").value(restaurantEntity.getUuid()))
-//                .andExpect(jsonPath("restaurant_name").value("Famous Restaurant"))
+//                .andExpect(jsonPath("restaurant_name").value("Famous RestaurantEntity"))
 //                .andExpect(jsonPath("customer_rating").value(3.4))
 //                .andExpect(jsonPath("number_customers_rated").value(200));
 //        verify(mockRestaurantService, times(1)).restaurantByUUID("someRestaurantId");
@@ -88,7 +88,7 @@
 //    @Test
 //    public void shouldNotGetRestaurantidIfRestaurantIdIsEmpty() throws Exception {
 //        when(mockRestaurantService.restaurantByUUID(anyString()))
-//                .thenThrow(new RestaurantNotFoundException("RNF-002", "Restaurant id field should not be empty"));
+//                .thenThrow(new RestaurantNotFoundException("RNF-002", "RestaurantEntity id field should not be empty"));
 //
 //        mockMvc
 //                .perform(get("/restaurant/emptyString").contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
@@ -148,7 +148,7 @@
 //    @Test
 //    public void shouldNotGetRestaurantByNameIfNameIsEmpty() throws Exception {
 //        when(mockRestaurantService.restaurantsByName(anyString()))
-//                .thenThrow(new RestaurantNotFoundException("RNF-003", "Restaurant name field should not be empty"));
+//                .thenThrow(new RestaurantNotFoundException("RNF-003", "RestaurantEntity name field should not be empty"));
 //
 //        mockMvc
 //                .perform(get("/restaurant/name/emptyString").contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
@@ -193,7 +193,7 @@
 //    @Test
 //    public void shouldNotGetRestaurantByCategoryidIfCategoryIdIsEmpty() throws Exception {
 //        when(mockRestaurantService.restaurantByCategory(anyString()))
-//                .thenThrow(new CategoryNotFoundException("CNF-001", "Category id field should not be empty"));
+//                .thenThrow(new CategoryNotFoundException("CNF-001", "CategoryEntity id field should not be empty"));
 //
 //        mockMvc
 //                .perform(get("/restaurant/category/emptyString").contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
@@ -281,7 +281,7 @@
 //    @Test
 //    public void shouldNotUpdateRestaurantRatingIfCustomerIsNotLoggedIn() throws Exception {
 //        when(mockCustomerService.getCustomer("invalid_auth"))
-//                .thenThrow(new AuthorizationFailedException("ATHR-001", "Customer is not Logged in."));
+//                .thenThrow(new AuthorizationFailedException("ATHR-001", "CustomerEntity is not Logged in."));
 //
 //        mockMvc
 //                .perform(put("/restaurant/someRestaurantId/?customer_rating=4.5")
@@ -299,7 +299,7 @@
 //    @Test
 //    public void shouldNotUpdateRestaurantRatingIfCustomerIsLoggedOut() throws Exception {
 //        when(mockCustomerService.getCustomer("invalid_auth"))
-//                .thenThrow(new AuthorizationFailedException("ATHR-002", "Customer is logged out. Log in again to access this endpoint."));
+//                .thenThrow(new AuthorizationFailedException("ATHR-002", "CustomerEntity is logged out. Log in again to access this endpoint."));
 //
 //        mockMvc
 //                .perform(put("/restaurant/someRestaurantId/?customer_rating=4.5")
@@ -338,7 +338,7 @@
 //                .thenReturn(new CustomerEntity());
 //
 //        when(mockRestaurantService.restaurantByUUID(anyString()))
-//                .thenThrow(new RestaurantNotFoundException("RNF-002", "Restaurant id field should not be empty"));
+//                .thenThrow(new RestaurantNotFoundException("RNF-002", "RestaurantEntity id field should not be empty"));
 //
 //        mockMvc
 //                .perform(get("/restaurant/emptyString").contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
@@ -461,7 +461,7 @@
 //        restaurantEntity.setCustomerRating(3.4);
 //        restaurantEntity.setNumberCustomersRated(200);
 //        restaurantEntity.setPhotoUrl("someurl");
-//        restaurantEntity.setRestaurantName("Famous Restaurant");
+//        restaurantEntity.setRestaurantName("Famous RestaurantEntity");
 //        return restaurantEntity;
 //    }
 //}
