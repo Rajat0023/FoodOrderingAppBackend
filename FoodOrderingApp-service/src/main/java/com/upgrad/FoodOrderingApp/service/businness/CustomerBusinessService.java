@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.regex.Pattern;
 
 
 @Service
@@ -33,6 +34,18 @@ public class CustomerBusinessService {
             || customer.getPassword() == null) {
       throw new SignUpRestrictedException(
               "SGR-005", "Except last name all fields should be filled");
+    }
+    if (customer.getEmail() != null) {
+      String email = customer.getEmail();
+      String emailRegex =
+              "^[a-zA-Z0-9_+&*-]+(?:\\."
+                      + "[a-zA-Z0-9_+&*-]+)*@"
+                      + "(?:[a-zA-Z0-9-]+\\.)+[a-z"
+                      + "A-Z]{2,7}$";
+      Pattern pattern = Pattern.compile(emailRegex);
+      if (!pattern.matcher(email).matches()) {
+        throw new SignUpRestrictedException("SGR-002", "Invalid email-id format!");
+      }
     }
 
 }
