@@ -47,5 +47,22 @@ public class CustomerBusinessService {
         throw new SignUpRestrictedException("SGR-002", "Invalid email-id format!");
       }
     }
+    if (customer.getContactNumber() != null) {
+      String contactNum = customer.getContactNumber();
+      String contactNumberRegex = "^[0-9]{10}$";
+      Pattern pattern = Pattern.compile(contactNumberRegex);
+      if (!pattern.matcher(contactNum).matches()) {
+        throw new SignUpRestrictedException("SGR-003", "Invalid contact number!");
+      }
+    }
+
+    if (customer.getPassword() != null) {
+      String password = customer.getPassword();
+      String passwordRegex = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[#@$%&*!^])(?=\\S+$).{8,}$";
+      Pattern pattern = Pattern.compile(passwordRegex);
+      if (!pattern.matcher(password).matches()) {
+        throw new SignUpRestrictedException("SGR-004", "Weak password!");
+      }
+    }
 
 }
