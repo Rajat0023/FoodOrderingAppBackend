@@ -20,7 +20,7 @@ public class PaymentsRepository {
 
         List<PaymentEntity> paymentMediumList = null;
         try {
-            TypedQuery<PaymentEntity> query = entityManager.createNamedQuery("query1", PaymentEntity.class);
+            TypedQuery<PaymentEntity> query = entityManager.createNamedQuery("getAllPaymentMethods", PaymentEntity.class);
             paymentMediumList = query.getResultList();
         } catch (NoResultException e) {
 
@@ -33,7 +33,7 @@ public class PaymentsRepository {
         PaymentEntity paymentEntity = null;
         try {
 
-            TypedQuery<PaymentEntity> query = entityManager.createNamedQuery("query2", PaymentEntity.class);
+            TypedQuery<PaymentEntity> query = entityManager.createNamedQuery("getPaymentMethodById", PaymentEntity.class);
             query.setParameter("uuid", uuid);
             paymentEntity = query.getSingleResult();
         } catch (NoResultException e) {

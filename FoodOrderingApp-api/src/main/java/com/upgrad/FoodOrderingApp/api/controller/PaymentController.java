@@ -1,9 +1,11 @@
 package com.upgrad.FoodOrderingApp.api.controller;
 
 import com.upgrad.FoodOrderingApp.api.model.PaymentListResponse;
+import com.upgrad.FoodOrderingApp.api.model.PaymentResponse;
 import com.upgrad.FoodOrderingApp.service.business.CustomerService;
 import com.upgrad.FoodOrderingApp.service.business.PaymentService;
 import com.upgrad.FoodOrderingApp.service.entity.CustomerEntity;
+import com.upgrad.FoodOrderingApp.service.entity.PaymentEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -12,6 +14,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import java.awt.*;
+import java.util.LinkedList;
+import java.util.List;
 
 @Controller
 @RequestMapping("/payment")
@@ -25,8 +31,17 @@ public class PaymentController {
     public ResponseEntity<PaymentListResponse> getPaymentMethods(@RequestHeader("authorization") String accessToken) {
         CustomerEntity cutomerEntity = customerService.getCustomer(accessToken);  //check authorization to rest uri
 
-        paymentsService.getAllPaymentMethods();
+        List<PaymentEntity> paymentEntityList = paymentsService.getAllPaymentMethods();
+        List<PaymentResponse> paymentResponseList = new LinkedList<>();
+        for (PaymentEntity paymentEntity : paymentEntityList) {
+            PaymentResponse paymentResponse = new PaymentResponse();
+            paymentResponse.setPaymentName(paymentEntity.getPaymentName());
+            // paymentResponse.setId();
+            paymentResponseList.add(paymentResponse);
+        }
+        PaymentListResponse paymentListResponse = new PaymentListResponse();
 
-        return new ResponseEntity<PaymentListResponse>(HttpStatus.OK);
+        paymentListResponse.setPaymentMethods(paymentResponseList);
+        return new ResponseEntity<PaymentListResponse>( paymentListResponse,HttpStatus.OK);
     }
 }

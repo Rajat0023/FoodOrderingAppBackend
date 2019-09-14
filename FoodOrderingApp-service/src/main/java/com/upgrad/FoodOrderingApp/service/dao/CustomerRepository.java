@@ -20,7 +20,7 @@ public class CustomerRepository {
         CustomerEntity customerEntity = null;
 
         try {
-            TypedQuery<CustomerEntity> query = entityManager.createNamedQuery("query", CustomerEntity.class);
+            TypedQuery<CustomerEntity> query = entityManager.createNamedQuery("getCustomerByAccessToken", CustomerEntity.class);
             query.setParameter("accessToken", accessToken);
 
             customerEntity = query.getSingleResult();

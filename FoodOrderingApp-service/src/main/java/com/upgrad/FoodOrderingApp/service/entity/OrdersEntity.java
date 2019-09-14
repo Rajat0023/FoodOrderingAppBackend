@@ -13,13 +13,12 @@ import java.util.List;
 
 @Entity
 @Table(name = "orders")
-@NamedQuery(name="query",query = "select o from OrdersEntity o where o.customerId.uuid =:customerId")
+@NamedQuery(name="findOrdersByCustomerId",query = "select o from OrdersEntity o where o.customerId.uuid =:customerId")
 public class OrdersEntity {
 
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @NotNull
     private Integer Id;
 
     @Column(name = "uuid")
@@ -63,7 +62,7 @@ public class OrdersEntity {
     private RestaurantEntity restaurantId;
 
 //bidirectional association
-    @OneToMany(mappedBy = "ordersEntity",fetch=FetchType.LAZY)
+    @OneToMany(mappedBy = "orderId",fetch=FetchType.LAZY,cascade = CascadeType.PERSIST)
    @OnDelete(action = OnDeleteAction.CASCADE) //deleting foreign key, when primary key itself deleted
     private List<OrderItemEntity> orderItems;   //Doubt //how to get this transient child-entity also persisted
 

@@ -17,7 +17,7 @@ public class OrderRepository {
 
         try {
 
-            TypedQuery<CouponEntity> query = entityManager.createNamedQuery("query1", CouponEntity.class);
+            TypedQuery<CouponEntity> query = entityManager.createNamedQuery("findCouponByCouponName", CouponEntity.class);
             query.setParameter("couponName", couponName);
             couponEntity = query.getSingleResult();
         } catch (NoResultException e) {
@@ -31,7 +31,7 @@ public class OrderRepository {
 
         try {
 
-            TypedQuery<CouponEntity> query = entityManager.createNamedQuery("query2", CouponEntity.class);
+            TypedQuery<CouponEntity> query = entityManager.createNamedQuery("findCouponByCouponId", CouponEntity.class);
             query.setParameter("uuid", uuid);
             couponEntity = query.getSingleResult();
         } catch (NoResultException e) {
@@ -51,7 +51,7 @@ public class OrderRepository {
 
         List<OrdersEntity> orders = null;
         try {
-            TypedQuery<OrdersEntity> query = entityManager.createNamedQuery("query", OrdersEntity.class);
+            TypedQuery<OrdersEntity> query = entityManager.createNamedQuery("findOrdersByCustomerId", OrdersEntity.class);
 
             query.setParameter("customerId", customerId);
             orders = query.getResultList();

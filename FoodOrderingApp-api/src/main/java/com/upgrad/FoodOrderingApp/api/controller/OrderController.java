@@ -45,11 +45,15 @@ public class OrderController {
         //currentTime>sessionExpiry
 
 //positive case, after all checks
-        ordersService.getCouponByCouponName(couponName);
+        CouponEntity couponEntity=ordersService.getCouponByCouponName(couponName);
 
+CouponDetailsResponse couponDetailsResponse=new CouponDetailsResponse();
+//entity to dto pending
+couponDetailsResponse.setCouponName(couponEntity.getCouponName());
+//couponDetailsResponse.setId(couponEntity.getId());
+couponDetailsResponse.setPercent(couponEntity.getPercent());
 
-        //entity to dto pending
-        return new ResponseEntity<CouponDetailsResponse>(HttpStatus.OK);
+        return new ResponseEntity<>(couponDetailsResponse,HttpStatus.OK);
     }
 
 
@@ -66,10 +70,48 @@ public class OrderController {
 
         //currentTime>sessionExpiry
 //positive case, after all checks
-        ordersService.getOrdersByCustomers(cutomerEntity.getUuid());
-
+        List<OrdersEntity> list = ordersService.getOrdersByCustomers(cutomerEntity.getUuid());
+        CustomerOrderResponse customerOrderResponse = new CustomerOrderResponse();
+        List<OrderList> orderList = new LinkedList<OrderList>();
+        List<ItemQuantityResponse> itemListPerOrder = new LinkedList<ItemQuantityResponse>();
         //entity to dto pending
-        return new ResponseEntity<CustomerOrderResponse>(HttpStatus.OK);
+        for (OrdersEntity entity : list) {
+            OrderList orderModel = new OrderList();
+
+
+            for (OrderItemEntity item : entity.getOrderItems()) {
+                ItemQuantityResponseItem itemQuantityResponseItem = new ItemQuantityResponseItem();
+                ItemQuantityResponse itemQuantityResponse = new ItemQuantityResponse();
+                // itemQuantityResponseItem.setId(itemList.getItemId().getId()); how to convert integer to UUID
+                itemQuantityResponseItem.setItemName(item.getItemId().getItemName());
+                itemQuantityResponseItem.setItemPrice(item.getItemId().getPrice());
+                itemQuantityResponseItem.setType(ItemQuantityResponseItem.TypeEnum.valueOf(ItemQuantityResponseItem.TypeEnum.class, item.getItemId().getType()));
+
+                itemQuantityResponse.setItem(itemQuantityResponseItem);
+                itemQuantityResponse.setPrice(item.getPrice());
+                itemQuantityResponse.setQuantity(item.getQuantity());
+
+                itemListPerOrder.add(itemQuantityResponse);
+            }
+
+            //orderModel.setId(entity.getId());
+            //   orderModel.setAddress();
+            orderModel.setBill(entity.getBill());
+            // orderModel.setCoupon();
+            //orderModel.setCustomer();
+            //orderModel.setPayment();
+
+            orderModel.setDate(entity.getDate().toString());
+            orderModel.setDiscount(entity.getDiscount());
+            orderModel.setItemQuantities(itemListPerOrder);
+
+            orderList.add(orderModel);
+
+
+        }
+
+        customerOrderResponse.setOrders(orderList);
+        return new ResponseEntity<>(customerOrderResponse, HttpStatus.OK);
     }
 
 
@@ -78,7 +120,7 @@ public class OrderController {
                                                              @RequestHeader("authorization") String accessToken) {
 
 //authorizing the access token
-        CustomerEntity cutomerEntity = customerService.getCustomer(accessToken);
+        CustomerEntity customerEntity = customerService.getCustomer(accessToken);
 
 //validate if logout>login
 
@@ -87,7 +129,7 @@ public class OrderController {
 //positive case, after all checks
         OrdersEntity ordersEntity = new OrdersEntity();
 
-        AddressEntity addressEntity = addressService.getAddressEntityFromUuid(placedOrder.getAddressId().toString());
+        AddressEntity addressEntity = addressService.getAddressEntityFromUuid(placedOrder.getAddressId());
 
         CouponEntity couponEntity = ordersService.getCouponByCouponId(placedOrder.getCouponId().toString());
 
@@ -121,8 +163,7 @@ public class OrderController {
         ordersEntity.setOrderItems(items);
         ordersEntity.setPaymentEntityId(paymentEntity);
         ordersEntity.setRestaurantId(restaurant);
-        ordersEntity.setCustomerId(cutomerEntity);
-
+        ordersEntity.setCustomerId(customerEntity);
 
         ordersService.shouldSaveOrder(ordersEntity);
 //entity to dto pending

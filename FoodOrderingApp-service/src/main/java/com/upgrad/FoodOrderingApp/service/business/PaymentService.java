@@ -25,6 +25,6 @@ public class PaymentService {
     public PaymentEntity getPaymentEntityFromUuid(String id) {
 
 
-        return new PaymentEntity();
+        return paymentsRepository.getPayment(id);
     }
 }

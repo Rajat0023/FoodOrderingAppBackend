@@ -17,7 +17,7 @@ public class AddressRepository {
         AddressEntity addressEntity = null;
         try {
 
-            TypedQuery<AddressEntity> query = entityManager.createNamedQuery("query", AddressEntity.class);
+            TypedQuery<AddressEntity> query = entityManager.createNamedQuery("findAddressByUuid", AddressEntity.class);
             query.setParameter("uuid", uuid);
             addressEntity = query.getSingleResult();
         } catch (NoResultException e) {
