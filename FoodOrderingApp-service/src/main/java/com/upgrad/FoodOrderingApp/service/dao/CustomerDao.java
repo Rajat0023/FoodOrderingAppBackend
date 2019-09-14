@@ -15,7 +15,6 @@ public class CustomerDao {
     private EntityManager entityManager;
 
     public Customer getContactNumber(String contactNumber){
-
         try {
             return entityManager.createNamedQuery("findContactNumber", Customer.class)
                     .setParameter("contactNumber",contactNumber)
@@ -24,6 +23,11 @@ public class CustomerDao {
         catch (NoResultException nre) {
             return null;
         }
+        }
+
+        public Customer createCustomer(Customer customer) {
+            entityManager.persist(customer);
+            return customer;
+        }
 
     }
-}

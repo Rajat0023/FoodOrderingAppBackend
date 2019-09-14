@@ -8,40 +8,38 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.UUID;
 import java.util.regex.Pattern;
-
 
 @Service
 @Transactional(propagation = Propagation.REQUIRED)
 public class CustomerBusinessService {
 
-    @Autowired
-    private CustomerDao customerDao;
+  @Autowired private CustomerDao customerDao;
 
-    @Autowired
-    private PasswordCryptographyProvider passwordCryptographyProvider;
+  @Autowired private PasswordCryptographyProvider passwordCryptographyProvider;
 
-  public Customer signUp(Customer customer)
-          throws SignUpRestrictedException {
+  public Customer signUp(Customer customer) throws SignUpRestrictedException {
 
-    if (customer.getContactNumber()!= null && customerDao.getContactNumber(customer.getContactNumber()) != null) {
+    if (customer.getContactNumber() != null
+        && customerDao.getContactNumber(customer.getContactNumber()) != null) {
       throw new SignUpRestrictedException(
-              "SGR-001", "This contact number is already registered! Try other contact number.");
+          "SGR-001", "This contact number is already registered! Try other contact number.");
     }
     if (customer.getFirstName() == null
-            || customer.getEmail() == null
-            || customer.getContactNumber() == null
-            || customer.getPassword() == null) {
+        || customer.getEmail() == null
+        || customer.getContactNumber() == null
+        || customer.getPassword() == null) {
       throw new SignUpRestrictedException(
-              "SGR-005", "Except last name all fields should be filled");
+          "SGR-005", "Except last name all fields should be filled");
     }
     if (customer.getEmail() != null) {
       String email = customer.getEmail();
       String emailRegex =
-              "^[a-zA-Z0-9_+&*-]+(?:\\."
-                      + "[a-zA-Z0-9_+&*-]+)*@"
-                      + "(?:[a-zA-Z0-9-]+\\.)+[a-z"
-                      + "A-Z]{2,7}$";
+          "^[a-zA-Z0-9_+&*-]+(?:\\."
+              + "[a-zA-Z0-9_+&*-]+)*@"
+              + "(?:[a-zA-Z0-9-]+\\.)+[a-z"
+              + "A-Z]{2,7}$";
       Pattern pattern = Pattern.compile(emailRegex);
       if (!pattern.matcher(email).matches()) {
         throw new SignUpRestrictedException("SGR-002", "Invalid email-id format!");
@@ -64,5 +62,11 @@ public class CustomerBusinessService {
         throw new SignUpRestrictedException("SGR-004", "Weak password!");
       }
     }
+    String[] encryptedText = passwordCryptographyProvider.encrypt(customer.getPassword());
+    customer.setSalt(encryptedText[0]);
+    customer.setPassword(encryptedText[1]);
+    customer.setUuid(UUID.randomUUID().toString());
 
-}
+    return customerDao.createCustomer(customer);
+  }
+    }
