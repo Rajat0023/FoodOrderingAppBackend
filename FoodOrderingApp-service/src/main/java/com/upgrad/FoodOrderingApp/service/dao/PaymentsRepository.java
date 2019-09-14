@@ -1,4 +1,4 @@
-package com.upgrad.FoodOrderingApp.service.repository;
+package com.upgrad.FoodOrderingApp.service.dao;
 
 import com.upgrad.FoodOrderingApp.service.entity.PaymentEntity;
 import org.springframework.stereotype.Repository;
@@ -20,11 +20,26 @@ public class PaymentsRepository {
 
         List<PaymentEntity> paymentMediumList = null;
         try {
-            TypedQuery<PaymentEntity> query = entityManager.createNamedQuery("query", PaymentEntity.class);
+            TypedQuery<PaymentEntity> query = entityManager.createNamedQuery("query1", PaymentEntity.class);
             paymentMediumList = query.getResultList();
         } catch (NoResultException e) {
 
         }
         return paymentMediumList;
+    }
+
+
+    public PaymentEntity getPayment(String uuid) {
+        PaymentEntity paymentEntity = null;
+        try {
+
+            TypedQuery<PaymentEntity> query = entityManager.createNamedQuery("query2", PaymentEntity.class);
+            query.setParameter("uuid", uuid);
+            paymentEntity = query.getSingleResult();
+        } catch (NoResultException e) {
+
+
+        }
+        return paymentEntity;
     }
 }

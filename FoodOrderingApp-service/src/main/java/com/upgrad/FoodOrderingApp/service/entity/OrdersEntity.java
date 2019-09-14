@@ -1,5 +1,9 @@
 package com.upgrad.FoodOrderingApp.service.entity;
 
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -9,6 +13,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "orders")
+@NamedQuery(name="query",query = "select o from OrdersEntity o where o.customerId.uuid =:customerId")
 public class OrdersEntity {
 
     @Id
@@ -57,8 +62,9 @@ public class OrdersEntity {
     @JoinColumn(name = "restaurant_id", referencedColumnName = "id")
     private RestaurantEntity restaurantId;
 
-
-    @OneToMany(cascade = CascadeType.ALL)
+//bidirectional association
+    @OneToMany(mappedBy = "ordersEntity",fetch=FetchType.LAZY)
+   @OnDelete(action = OnDeleteAction.CASCADE) //deleting foreign key, when primary key itself deleted
     private List<OrderItemEntity> orderItems;   //Doubt //how to get this transient child-entity also persisted
 
 

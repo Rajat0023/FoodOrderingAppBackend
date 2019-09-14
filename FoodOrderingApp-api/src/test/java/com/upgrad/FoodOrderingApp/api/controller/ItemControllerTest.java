@@ -2,8 +2,8 @@
 //
 //import com.fasterxml.jackson.databind.ObjectMapper;
 //import com.upgrad.FoodOrderingApp.api.model.ItemListResponse;
-//import com.upgrad.FoodOrderingApp.service.businness.ItemService;
-//import com.upgrad.FoodOrderingApp.service.businness.RestaurantService;
+//import com.upgrad.FoodOrderingApp.service.business.ItemService;
+//import com.upgrad.FoodOrderingApp.service.business.RestaurantService;
 //import com.upgrad.FoodOrderingApp.service.entity.ItemEntity;
 //import com.upgrad.FoodOrderingApp.service.entity.RestaurantEntity;
 //import com.upgrad.FoodOrderingApp.service.exception.RestaurantNotFoundException;

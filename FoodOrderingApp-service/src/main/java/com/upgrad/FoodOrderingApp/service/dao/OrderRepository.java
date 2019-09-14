@@ -1,4 +1,4 @@
-package com.upgrad.FoodOrderingApp.service.repository;
+package com.upgrad.FoodOrderingApp.service.dao;
 
 import com.upgrad.FoodOrderingApp.service.entity.CouponEntity;
 import com.upgrad.FoodOrderingApp.service.entity.OrdersEntity;
@@ -17,7 +17,7 @@ public class OrderRepository {
 
         try {
 
-            TypedQuery<CouponEntity> query = entityManager.createNamedQuery("query", CouponEntity.class);
+            TypedQuery<CouponEntity> query = entityManager.createNamedQuery("query1", CouponEntity.class);
             query.setParameter("couponName", couponName);
             couponEntity = query.getSingleResult();
         } catch (NoResultException e) {
@@ -26,26 +26,34 @@ public class OrderRepository {
         return couponEntity;
     }
 
+    public CouponEntity getCouponByCouponId(String uuid) {
+        CouponEntity couponEntity = null;
 
+        try {
 
+            TypedQuery<CouponEntity> query = entityManager.createNamedQuery("query2", CouponEntity.class);
+            query.setParameter("uuid", uuid);
+            couponEntity = query.getSingleResult();
+        } catch (NoResultException e) {
 
+        }
+        return couponEntity;
+    }
 
 
     public void savePlacedOrder(OrdersEntity transaction) {
+
         entityManager.persist(transaction);
     }
 
 
-
-
-
-    public List<OrdersEntity> getAllPastOrdersOfUser(String accessToken) {
+    public List<OrdersEntity> getAllPastOrdersOfCustomer(String customerId) {
 
         List<OrdersEntity> orders = null;
         try {
-            TypedQuery<OrdersEntity> query = entityManager.createNamedQuery("select o from OrdersEntity where o.customerId.salt =:accessToken", OrdersEntity.class);
+            TypedQuery<OrdersEntity> query = entityManager.createNamedQuery("query", OrdersEntity.class);
 
-            query.setParameter("accessToken", accessToken);
+            query.setParameter("customerId", customerId);
             orders = query.getResultList();
         } catch (NoResultException e) {
 

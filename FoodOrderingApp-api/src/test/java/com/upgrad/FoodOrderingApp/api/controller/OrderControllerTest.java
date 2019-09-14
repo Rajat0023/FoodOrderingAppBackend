@@ -65,14 +65,7 @@
 //                .thenReturn(customerEntity);
 //
 //        final SaveOrderRequest saveOrderRequest = getSaveOrderRequest();
-//        when(mockPaymentService.getPaymentByUUID(saveOrderRequest.getPaymentEntityId().toString()))
-//                .thenReturn(new PaymentEntity());
-//        when(mockAddressService.getAddressByUUID(saveOrderRequest.getAddressId(), customerEntity))
-//                .thenReturn(new AddressEntity());
-//        when(mockRestaurantService.restaurantByUUID(saveOrderRequest.getRestaurantId().toString()))
-//                .thenReturn(new RestaurantEntity());
-//        when(mockOrderService.getCouponByCouponId(saveOrderRequest.getCouponEntityId().toString()))
-//                .thenReturn(new CouponEntity());
+//        w
 //
 //        final OrderEntity orderEntity = new OrderEntity();
 //        final String orderId = UUID.randomUUID().toString();
