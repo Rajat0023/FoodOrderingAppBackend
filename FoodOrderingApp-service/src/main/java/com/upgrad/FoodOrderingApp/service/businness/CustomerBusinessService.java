@@ -27,5 +27,12 @@ public class CustomerBusinessService {
       throw new SignUpRestrictedException(
               "SGR-001", "This contact number is already registered! Try other contact number.");
     }
+    if (customer.getFirstName() == null
+            || customer.getEmail() == null
+            || customer.getContactNumber() == null
+            || customer.getPassword() == null) {
+      throw new SignUpRestrictedException(
+              "SGR-005", "Except last name all fields should be filled");
+    }
 
 }
