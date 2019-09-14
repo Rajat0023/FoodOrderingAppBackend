@@ -34,6 +34,12 @@ public class CustomerController {
         customer.setContactNumber(signupCustomerRequest.getContactNumber());
         customer.setPassword(signupCustomerRequest.getPassword());
 
+        Customer createdCustomer = customerBusinessService.signUp(customer);
+
+        SignupCustomerResponse signupCustomerResponse = new SignupCustomerResponse().id(createdCustomer.getUuid())
+                .status("CUSTOMER SUCCESSFULLY REGISTERED");
+
+        return new ResponseEntity<SignupCustomerResponse>(signupCustomerResponse, HttpStatus.CREATED);
     }
 
 }
