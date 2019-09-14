@@ -6,12 +6,16 @@ import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "customer")
+
+@NamedQueries({
+        @NamedQuery(name = "findContactNumber", query = "Select c from Customer c where c.contactNumber = :contactNumber")
+})
+
 public class Customer {
 
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @NotNull
     private Integer Id;
 
     @Column(name = "uuid")
