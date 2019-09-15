@@ -17,12 +17,12 @@ public class CustomerAddress {
     @OneToOne(cascade = CascadeType.REMOVE)
     @NotNull
     @JoinColumn(name = "address_id", referencedColumnName = "id")
-    private Address addressId;
+    private AddressEntity addressId;
 
     @ManyToOne(cascade = CascadeType.REMOVE)
     @NotNull
     @JoinColumn(name = "customer_id", referencedColumnName = "id")
-    private Customer customerId;
+    private CustomerEntity customerId;
 
     public Integer getId() {
         return Id;
@@ -32,19 +32,19 @@ public class CustomerAddress {
         Id = id;
     }
 
-    public Address getAddressId() {
+    public AddressEntity getAddressId() {
         return addressId;
     }
 
-    public void setAddressId(Address addressId) {
+    public void setAddressId(AddressEntity addressId) {
         this.addressId = addressId;
     }
 
-    public Customer getCustomerId() {
+    public CustomerEntity getCustomerId() {
         return customerId;
     }
 
-    public void setCustomerId(Customer customerId) {
+    public void setCustomerId(CustomerEntity customerId) {
         this.customerId = customerId;
     }
 }

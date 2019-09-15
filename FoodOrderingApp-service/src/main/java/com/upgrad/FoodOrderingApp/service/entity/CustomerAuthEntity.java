@@ -3,16 +3,18 @@ package com.upgrad.FoodOrderingApp.service.entity;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 
 @Entity
 @Table(name = "customer_auth")
-public class CustomerAuth {
+@NamedQueries({
+        @NamedQuery(name = "customerAuthByAccessToken", query = "Select c from CustomerAuthEntity c where c.accessToken = :accessToken")
+})
+public class CustomerAuthEntity {
 
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @NotNull
     private Integer Id;
 
     @Column(name = "uuid")
@@ -23,7 +25,7 @@ public class CustomerAuth {
     @OneToOne(cascade = CascadeType.REMOVE)
     @NotNull
     @JoinColumn(name = "customer_id", referencedColumnName = "id")
-    private Customer customerId;
+    private CustomerEntity customer;
 
     @Column(name = "access_token")
     @NotNull
@@ -32,15 +34,15 @@ public class CustomerAuth {
 
     @Column(name = "login_at")
     @Basic
-    private LocalDateTime loginTime;
+    private ZonedDateTime loginTime;
 
     @Column(name = "logout_at")
     @Basic
-    private LocalDateTime logoutTime;
+    private ZonedDateTime logoutTime;
 
     @Column(name = "expires_at")
     @Basic
-    private LocalDateTime expiryTime;
+    private ZonedDateTime expiryTime;
 
     public Integer getId() {
         return Id;
@@ -58,13 +60,11 @@ public class CustomerAuth {
         this.uuid = uuid;
     }
 
-    public Customer getCustomerId() {
-        return customerId;
+    public CustomerEntity getCustomer() {
+        return customer;
     }
 
-    public void setCustomerId(Customer customerId) {
-        this.customerId = customerId;
-    }
+    public void setCustomer(CustomerEntity customer) { this.customer = customer; }
 
     public String getAccessToken() {
         return accessToken;
@@ -74,27 +74,27 @@ public class CustomerAuth {
         this.accessToken = accessToken;
     }
 
-    public LocalDateTime getLoginTime() {
+    public ZonedDateTime getLoginTime() {
         return loginTime;
     }
 
-    public void setLoginTime(LocalDateTime loginTime) {
+    public void setLoginTime(ZonedDateTime loginTime) {
         this.loginTime = loginTime;
     }
 
-    public LocalDateTime getLogoutTime() {
+    public ZonedDateTime getLogoutTime() {
         return logoutTime;
     }
 
-    public void setLogoutTime(LocalDateTime logoutTime) {
+    public void setLogoutTime(ZonedDateTime logoutTime) {
         this.logoutTime = logoutTime;
     }
 
-    public LocalDateTime getExpiryTime() {
+    public ZonedDateTime getExpiryTime() {
         return expiryTime;
     }
 
-    public void setExpiryTime(LocalDateTime expiryTime) {
+    public void setExpiryTime(ZonedDateTime expiryTime) {
         this.expiryTime = expiryTime;
     }
 }

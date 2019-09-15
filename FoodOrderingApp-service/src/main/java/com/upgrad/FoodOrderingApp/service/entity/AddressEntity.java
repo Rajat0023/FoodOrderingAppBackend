@@ -7,12 +7,12 @@ import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "address")
-public class Address {
+
+public class AddressEntity {
 
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @NotNull
     private Integer Id;
 
     @Column(name= "uuid")
@@ -38,7 +38,7 @@ public class Address {
 
     @OneToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "state_id",referencedColumnName = "id")
-    private State stateId;
+    private StateEntity state;
 
 
     public Integer getId() {
@@ -89,12 +89,8 @@ public class Address {
         this.pinCode = pinCode;
     }
 
-    public State getStateId() {
-        return stateId;
-    }
+    public StateEntity getState() { return state; }
 
-    public void setStateId(State stateId) {
-        this.stateId = stateId;
-    }
+    public void setState(StateEntity state) { this.state = state; }
 
 }
