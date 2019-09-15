@@ -45,15 +45,16 @@ public class OrderController {
         //currentTime>sessionExpiry
 
 //positive case, after all checks
-        CouponEntity couponEntity=ordersService.getCouponByCouponName(couponName);
+        CouponEntity couponEntity = ordersService.getCouponByCouponName(couponName);
 
-CouponDetailsResponse couponDetailsResponse=new CouponDetailsResponse();
+        CouponDetailsResponse couponDetailsResponse = new CouponDetailsResponse();
 //entity to dto pending
-couponDetailsResponse.setCouponName(couponEntity.getCouponName());
-//couponDetailsResponse.setId(couponEntity.getId());
-couponDetailsResponse.setPercent(couponEntity.getPercent());
+        couponDetailsResponse.setCouponName(couponEntity.getCouponName());
+        UUID uuid = UUID.fromString(couponEntity.getUuid());
+        couponDetailsResponse.setId(uuid);
+        couponDetailsResponse.setPercent(couponEntity.getPercent());
 
-        return new ResponseEntity<>(couponDetailsResponse,HttpStatus.OK);
+        return new ResponseEntity<>(couponDetailsResponse, HttpStatus.OK);
     }
 
 
@@ -82,10 +83,18 @@ couponDetailsResponse.setPercent(couponEntity.getPercent());
             for (OrderItemEntity item : entity.getOrderItems()) {
                 ItemQuantityResponseItem itemQuantityResponseItem = new ItemQuantityResponseItem();
                 ItemQuantityResponse itemQuantityResponse = new ItemQuantityResponse();
-                // itemQuantityResponseItem.setId(itemList.getItemId().getId()); how to convert integer to UUID
+                UUID uuid = UUID.fromString(item.getItemId().getUuid());
+                itemQuantityResponseItem.setId(uuid); //how to convert integer to UUID
                 itemQuantityResponseItem.setItemName(item.getItemId().getItemName());
                 itemQuantityResponseItem.setItemPrice(item.getItemId().getPrice());
-                itemQuantityResponseItem.setType(ItemQuantityResponseItem.TypeEnum.valueOf(ItemQuantityResponseItem.TypeEnum.class, item.getItemId().getType()));
+                if (item.getItemId().getType().equals("0")) {
+                    //veg
+                    itemQuantityResponseItem.setType(ItemQuantityResponseItem.TypeEnum.VEG);
+                } else {
+                    //non veg
+                    itemQuantityResponseItem.setType(ItemQuantityResponseItem.TypeEnum.NON_VEG);
+                }
+
 
                 itemQuantityResponse.setItem(itemQuantityResponseItem);
                 itemQuantityResponse.setPrice(item.getPrice());
@@ -93,8 +102,8 @@ couponDetailsResponse.setPercent(couponEntity.getPercent());
 
                 itemListPerOrder.add(itemQuantityResponse);
             }
-
-            //orderModel.setId(entity.getId());
+            UUID uuid = UUID.fromString(entity.getUuid());
+            orderModel.setId(uuid);
             //   orderModel.setAddress();
             orderModel.setBill(entity.getBill());
             // orderModel.setCoupon();
@@ -103,7 +112,7 @@ couponDetailsResponse.setPercent(couponEntity.getPercent());
 
             orderModel.setDate(entity.getDate().toString());
             orderModel.setDiscount(entity.getDiscount());
-            orderModel.setItemQuantities(itemListPerOrder);
+            orderModel.setItemQuantities(itemListPerOrder); //list of orders
 
             orderList.add(orderModel);
 
@@ -146,6 +155,7 @@ couponDetailsResponse.setPercent(couponEntity.getPercent());
             OrderItemEntity orderItem = new OrderItemEntity();
 
             orderItem.setItemId(item);
+            orderItem.setOrderId(ordersEntity);
             orderItem.setPrice(currentItem.getPrice());
             orderItem.setQuantity(currentItem.getQuantity());
 
