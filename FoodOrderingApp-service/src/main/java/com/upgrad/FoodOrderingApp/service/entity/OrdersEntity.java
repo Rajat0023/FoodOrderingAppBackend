@@ -62,8 +62,7 @@ public class OrdersEntity {
     private RestaurantEntity restaurantId;
 
 //bidirectional association
-    @OneToMany(mappedBy = "orderId",fetch=FetchType.LAZY,cascade = CascadeType.PERSIST)
-   @OnDelete(action = OnDeleteAction.CASCADE) //deleting foreign key, when primary key itself deleted
+    @OneToMany(mappedBy = "orderId",fetch=FetchType.LAZY,cascade = {CascadeType.PERSIST,CascadeType.REMOVE}) //persisting child object, deleting foreign key, when primary key itself deleted
     private List<OrderItemEntity> orderItems;   //Doubt //how to get this transient child-entity also persisted
 
 

@@ -10,7 +10,7 @@ public class OrderItemEntity {
       @Id
       @Column(name = "id")
       @GeneratedValue(strategy = GenerationType.IDENTITY)
-      @NotNull
+
       private Integer Id;
 
       @ManyToOne(cascade = CascadeType.REMOVE)
