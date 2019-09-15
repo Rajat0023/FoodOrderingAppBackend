@@ -2,6 +2,7 @@ package com.upgrad.FoodOrderingApp.service.business;
 
 import com.upgrad.FoodOrderingApp.service.dao.CustomerRepository;
 import com.upgrad.FoodOrderingApp.service.entity.CustomerEntity;
+import com.upgrad.FoodOrderingApp.service.exception.AuthorizationFailedException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,8 +13,14 @@ public class CustomerService {
     private CustomerRepository customerRepository;
 
 
-    public CustomerEntity getCustomer(String accessToken) {
+    public CustomerEntity getCustomer(String customerId)  {
 
-        return customerRepository.getCustomer(accessToken);
+        CustomerEntity customerEntity = customerRepository.getCustomer(customerId);
+
+
+
+
+
+        return customerEntity;
     }
 }

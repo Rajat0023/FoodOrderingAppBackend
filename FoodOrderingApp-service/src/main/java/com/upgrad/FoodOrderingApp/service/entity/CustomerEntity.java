@@ -6,7 +6,7 @@ import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "customer")
-@NamedQuery(name="getCustomerByAccessToken",query = "select c from CustomerEntity c where c.id = (select a.customerId from CustomerAuthEntity a where a.accessToken=:accessToken)")
+@NamedQuery(name="getCustomerByUuid",query = "select c from CustomerEntity c where c.uuid=:customerUuid")
 public class CustomerEntity {
 
     @Id

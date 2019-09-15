@@ -16,12 +16,12 @@ public class CustomerRepository {
     private EntityManager entityManager;
 
 
-    public CustomerEntity getCustomer(String accessToken) {
+    public CustomerEntity getCustomer(String customerUuid) {
         CustomerEntity customerEntity = null;
 
         try {
-            TypedQuery<CustomerEntity> query = entityManager.createNamedQuery("getCustomerByAccessToken", CustomerEntity.class);
-            query.setParameter("accessToken", accessToken);
+            TypedQuery<CustomerEntity> query = entityManager.createNamedQuery("getCustomerByUuid", CustomerEntity.class);
+            query.setParameter("customerUuid", customerUuid);
 
             customerEntity = query.getSingleResult();
 

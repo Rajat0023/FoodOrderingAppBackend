@@ -7,6 +7,7 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "customer_auth")
+@NamedQuery(name = "getCustomerAuthInfo",query = "select c from CustomerAuthEntity c where c.accessToken =:accessToken")
 public class CustomerAuthEntity {
 
     @Id

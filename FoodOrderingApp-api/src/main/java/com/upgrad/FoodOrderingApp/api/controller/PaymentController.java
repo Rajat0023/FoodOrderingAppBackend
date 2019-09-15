@@ -2,10 +2,13 @@ package com.upgrad.FoodOrderingApp.api.controller;
 
 import com.upgrad.FoodOrderingApp.api.model.PaymentListResponse;
 import com.upgrad.FoodOrderingApp.api.model.PaymentResponse;
+import com.upgrad.FoodOrderingApp.service.business.CustomerAuthService;
 import com.upgrad.FoodOrderingApp.service.business.CustomerService;
 import com.upgrad.FoodOrderingApp.service.business.PaymentService;
+import com.upgrad.FoodOrderingApp.service.entity.CustomerAuthEntity;
 import com.upgrad.FoodOrderingApp.service.entity.CustomerEntity;
 import com.upgrad.FoodOrderingApp.service.entity.PaymentEntity;
+import com.upgrad.FoodOrderingApp.service.exception.AuthorizationFailedException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -18,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import java.awt.*;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.UUID;
 
 @Controller
 @RequestMapping("/payment")
@@ -27,21 +31,27 @@ public class PaymentController {
     @Autowired
     private CustomerService customerService;
 
+    @Autowired
+    private CustomerAuthService customerAuthService;
+
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<PaymentListResponse> getPaymentMethods(@RequestHeader("authorization") String accessToken) {
-        CustomerEntity cutomerEntity = customerService.getCustomer(accessToken);  //check authorization to rest uri
+    public ResponseEntity<PaymentListResponse> getPaymentMethods(@RequestHeader("authorization") String accessToken) throws AuthorizationFailedException {
+        CustomerAuthEntity customerAuthEntity = customerAuthService.getCustomerAuthDetails(accessToken);
+
 
         List<PaymentEntity> paymentEntityList = paymentsService.getAllPaymentMethods();
+
         List<PaymentResponse> paymentResponseList = new LinkedList<>();
         for (PaymentEntity paymentEntity : paymentEntityList) {
             PaymentResponse paymentResponse = new PaymentResponse();
             paymentResponse.setPaymentName(paymentEntity.getPaymentName());
-            // paymentResponse.setId();
+            UUID uuid = UUID.fromString(paymentEntity.getUuid());
+            paymentResponse.setId(uuid);
             paymentResponseList.add(paymentResponse);
         }
         PaymentListResponse paymentListResponse = new PaymentListResponse();
 
         paymentListResponse.setPaymentMethods(paymentResponseList);
-        return new ResponseEntity<PaymentListResponse>( paymentListResponse,HttpStatus.OK);
+        return new ResponseEntity<PaymentListResponse>(paymentListResponse, HttpStatus.OK);
     }
 }
