@@ -19,7 +19,7 @@ public class CustomerAuthService {
 
         //user validations
         if (customerAuthEntity == null) {
-            throw new AuthorizationFailedException("ATHR-001)", "Customer is not Logged in");
+            throw new AuthorizationFailedException("ATHR-001", "Customer is not Logged in");
 
         } else if (customerAuthEntity.getLogoutTime().isAfter(customerAuthEntity.getLoginTime())) {
             throw new AuthorizationFailedException("ATHR-002", "Customer is logged out. Log in again to access this endpoint");
