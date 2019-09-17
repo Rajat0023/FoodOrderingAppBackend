@@ -16,7 +16,7 @@ public class OrderItemEntity {
       @ManyToOne(cascade = CascadeType.REMOVE)
       @NotNull
       @JoinColumn(name = "order_id", referencedColumnName = "id")
-      private OrdersEntity orderId;
+      private OrderEntity orderId;
 
       @OneToOne
       @NotNull
@@ -39,11 +39,11 @@ public class OrderItemEntity {
         Id = id;
     }
 
-    public OrdersEntity getOrderId() {
+    public OrderEntity getOrderId() {
         return orderId;
     }
 
-    public void setOrderId(OrdersEntity orderId) {
+    public void setOrderId(OrderEntity orderId) {
         this.orderId = orderId;
     }
 

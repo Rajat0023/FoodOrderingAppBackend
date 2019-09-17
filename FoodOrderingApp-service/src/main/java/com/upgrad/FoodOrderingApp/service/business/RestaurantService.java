@@ -13,7 +13,7 @@ public class RestaurantService {
     @Autowired
     private RestaurentRepository restaurentRepository;
 
-    public RestaurantEntity getRestaurentEntityFromUuid(String id) throws RestaurantNotFoundException{
+    public RestaurantEntity restaurantByUUID(String id) throws RestaurantNotFoundException{
 
 
         RestaurantEntity restaurantEntity= restaurentRepository.getRestaurent(id);

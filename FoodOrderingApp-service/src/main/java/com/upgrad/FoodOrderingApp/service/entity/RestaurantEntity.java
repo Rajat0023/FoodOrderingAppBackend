@@ -31,20 +31,20 @@ public class RestaurantEntity {
 
     @Column(name = "customer_rating")
     @NotNull
-    private Float customerRating;
+    private Double customerRating;
 
     @Column(name = "average_price_for_two")
     @NotNull
-    private Integer averagePriceForTwo;
+    private Integer avgPrice;
 
     @Column(name = "number_of_customers_rated")
     @NotNull
-    private Integer numberOfCustomersRated;
+    private Integer numberCustomersRated;
 
     @OneToOne(cascade = CascadeType.REMOVE)
     @NotNull
     @JoinColumn(name = "address_id", referencedColumnName = "id")
-    private AddressEntity addressId;
+    private AddressEntity address;
 
     public Integer getId() {
         return Id;
@@ -78,35 +78,35 @@ public class RestaurantEntity {
         this.photoUrl = photoUrl;
     }
 
-    public Float getCustomerRating() {
+    public Double getCustomerRating() {
         return customerRating;
     }
 
-    public void setCustomerRating(Float customerRating) {
+    public void setCustomerRating(Double customerRating) {
         this.customerRating = customerRating;
     }
 
-    public Integer getAveragePriceForTwo() {
-        return averagePriceForTwo;
+    public Integer getAvgPrice() {
+        return avgPrice;
     }
 
-    public void setAveragePriceForTwo(Integer averagePriceForTwo) {
-        this.averagePriceForTwo = averagePriceForTwo;
+    public void setAvgPrice(Integer avgPrice) {
+        this.avgPrice = avgPrice;
     }
 
-    public Integer getNumberOfCustomersRated() {
-        return numberOfCustomersRated;
+    public Integer getNumberCustomersRated() {
+        return numberCustomersRated;
     }
 
-    public void setNumberOfCustomersRated(Integer numberOfCustomersRated) {
-        this.numberOfCustomersRated = numberOfCustomersRated;
+    public void setNumberCustomersRated(Integer numberCustomersRated) {
+        this.numberCustomersRated = numberCustomersRated;
     }
 
-    public AddressEntity getAddressId() {
-        return addressId;
+    public AddressEntity getAddress() {
+        return address;
     }
 
-    public void setAddressId(AddressEntity addressId) {
-        this.addressId = addressId;
+    public void setAddress(AddressEntity address) {
+        this.address = address;
     }
 }

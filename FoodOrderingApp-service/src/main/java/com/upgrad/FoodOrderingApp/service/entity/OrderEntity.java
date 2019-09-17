@@ -9,12 +9,13 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 @Entity
 @Table(name = "orders")
-@NamedQuery(name="findOrdersByCustomerId",query = "select o from OrdersEntity o where o.customerId.uuid =:customerId")
-public class OrdersEntity {
+@NamedQuery(name = "findOrdersByCustomerId", query = "select o from OrderEntity o where o.customer.uuid =:customerId")
+public class OrderEntity {
 
     @Id
     @Column(name = "id")
@@ -28,7 +29,7 @@ public class OrdersEntity {
 
     @Column(name = "bill")
     @NotNull
-    private BigDecimal bill;
+    private double bill;
 
 
     @OneToOne
@@ -36,36 +37,51 @@ public class OrdersEntity {
     private CouponEntity couponEntityId;
 
     @Column(name = "discount")
-    private BigDecimal discount;
+    private double discount;
 
     @Column(name = "date")
     @NotNull
-    private LocalDateTime date;
+    private Date date;
 
     @OneToOne
     @JoinColumn(name = "payment_id", referencedColumnName = "id")
     private PaymentEntity paymentEntityId;
 
-    @OneToOne(cascade = CascadeType.REMOVE)                   //this cascades the operation to child entity too(in this case only delete operation)
+    @OneToOne(cascade = CascadeType.REMOVE)
+    //this cascades the operation to child entity too(in this case only delete operation)
     @NotNull
     @JoinColumn(name = "customer_id", referencedColumnName = "id")
-    private CustomerEntity customerId;
+    private CustomerEntity customer;
 
     @OneToOne
     @NotNull
     @JoinColumn(name = "address_id", referencedColumnName = "id")
-    private AddressEntity addressId;
+    private AddressEntity address;
 
     @OneToOne
     @NotNull
     @JoinColumn(name = "restaurant_id", referencedColumnName = "id")
     private RestaurantEntity restaurantId;
 
-//bidirectional association
-    @OneToMany(mappedBy = "orderId",fetch=FetchType.LAZY,cascade = {CascadeType.PERSIST,CascadeType.REMOVE}) //persisting child object, deleting foreign key, when primary key itself deleted
+    //bidirectional association
+    @OneToMany(mappedBy = "orderId", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+    //persisting child object, deleting foreign key, when primary key itself deleted
     private List<OrderItemEntity> orderItems;   //Doubt //how to get this transient child-entity also persisted
 
+    public OrderEntity() {
+    }
 
+    public OrderEntity(@NotNull @Size(max = 200) String uuid, @NotNull double bill, CouponEntity couponEntityId, double discount, @NotNull Date date, PaymentEntity paymentEntityId, @NotNull CustomerEntity customer, @NotNull AddressEntity address, @NotNull RestaurantEntity restaurantId) {
+        this.uuid = uuid;
+        this.bill = bill;
+        this.couponEntityId = couponEntityId;
+        this.discount = discount;
+        this.date = date;
+        this.paymentEntityId = paymentEntityId;
+        this.customer = customer;
+        this.address = address;
+        this.restaurantId = restaurantId;
+    }
 
     public List<OrderItemEntity> getOrderItems() {
         return orderItems;
@@ -91,13 +107,6 @@ public class OrdersEntity {
         this.uuid = uuid;
     }
 
-    public BigDecimal getBill() {
-        return bill;
-    }
-
-    public void setBill(BigDecimal bill) {
-        this.bill = bill;
-    }
 
     public CouponEntity getCouponEntityId() {
         return couponEntityId;
@@ -107,19 +116,28 @@ public class OrdersEntity {
         this.couponEntityId = couponEntityId;
     }
 
-    public BigDecimal getDiscount() {
+
+    public double getBill() {
+        return bill;
+    }
+
+    public void setBill(double bill) {
+        this.bill = bill;
+    }
+
+    public double getDiscount() {
         return discount;
     }
 
-    public void setDiscount(BigDecimal discount) {
+    public void setDiscount(double discount) {
         this.discount = discount;
     }
 
-    public LocalDateTime getDate() {
+    public Date getDate() {
         return date;
     }
 
-    public void setDate(LocalDateTime date) {
+    public void setDate(Date date) {
         this.date = date;
     }
 
@@ -131,20 +149,20 @@ public class OrdersEntity {
         this.paymentEntityId = paymentEntityId;
     }
 
-    public CustomerEntity getCustomerId() {
-        return customerId;
+    public CustomerEntity getCustomer() {
+        return customer;
     }
 
-    public void setCustomerId(CustomerEntity customerId) {
-        this.customerId = customerId;
+    public void setCustomer(CustomerEntity customer) {
+        this.customer = customer;
     }
 
-    public AddressEntity getAddressId() {
-        return addressId;
+    public AddressEntity getAddress() {
+        return address;
     }
 
-    public void setAddressId(AddressEntity addressId) {
-        this.addressId = addressId;
+    public void setAddress(AddressEntity address) {
+        this.address = address;
     }
 
     public RestaurantEntity getRestaurantId() {

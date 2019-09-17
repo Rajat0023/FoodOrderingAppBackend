@@ -23,7 +23,7 @@ public class PaymentService {
     }
 
 
-    public PaymentEntity getPaymentEntityFromUuid(String id) throws PaymentMethodNotFoundException{
+    public PaymentEntity getPaymentByUUID(String id) throws PaymentMethodNotFoundException{
 
 
       PaymentEntity paymentEntity= paymentsRepository.getPayment(id);

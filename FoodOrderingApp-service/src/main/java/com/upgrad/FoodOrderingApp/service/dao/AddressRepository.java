@@ -1,6 +1,7 @@
 package com.upgrad.FoodOrderingApp.service.dao;
 
 import com.upgrad.FoodOrderingApp.service.entity.AddressEntity;
+import com.upgrad.FoodOrderingApp.service.entity.CustomerAddressEntity;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -13,6 +14,8 @@ public class AddressRepository {
     @PersistenceContext
     private EntityManager entityManager;
 
+
+
     public AddressEntity getAddress(String uuid) {
         AddressEntity addressEntity = null;
         try {
@@ -20,10 +23,29 @@ public class AddressRepository {
             TypedQuery<AddressEntity> query = entityManager.createNamedQuery("findAddressByUuid", AddressEntity.class);
             query.setParameter("uuid", uuid);
             addressEntity = query.getSingleResult();
+
         } catch (NoResultException e) {
 
 
         }
         return addressEntity;
     }
+
+    public CustomerAddressEntity getCustomer(Integer customerId,Integer addressId) {
+        CustomerAddressEntity customerAddressEntity =null;
+        try {
+            TypedQuery<CustomerAddressEntity> query = entityManager.createNamedQuery("customerByAdressId", CustomerAddressEntity.class);
+            query.setParameter("customerId",customerId);
+            query.setParameter("addressId", addressId);
+
+            customerAddressEntity = query.getSingleResult();
+        } catch (Exception e) {
+
+
+        }
+        return customerAddressEntity;
+
+
+    }
+
 }

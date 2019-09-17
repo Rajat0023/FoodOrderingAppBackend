@@ -2,7 +2,6 @@ package com.upgrad.FoodOrderingApp.api.controller;
 
 import com.upgrad.FoodOrderingApp.api.model.PaymentListResponse;
 import com.upgrad.FoodOrderingApp.api.model.PaymentResponse;
-import com.upgrad.FoodOrderingApp.service.business.CustomerAuthService;
 import com.upgrad.FoodOrderingApp.service.business.CustomerService;
 import com.upgrad.FoodOrderingApp.service.business.PaymentService;
 import com.upgrad.FoodOrderingApp.service.entity.CustomerAuthEntity;
@@ -18,7 +17,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import java.awt.*;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.UUID;
@@ -31,12 +29,10 @@ public class PaymentController {
     @Autowired
     private CustomerService customerService;
 
-    @Autowired
-    private CustomerAuthService customerAuthService;
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<PaymentListResponse> getPaymentMethods(@RequestHeader("authorization") String accessToken) throws AuthorizationFailedException {
-        CustomerAuthEntity customerAuthEntity = customerAuthService.getCustomerAuthDetails(accessToken);
+        CustomerEntity customerEntity = customerService.getCustomer(accessToken);
 
 
         List<PaymentEntity> paymentEntityList = paymentsService.getAllPaymentMethods();

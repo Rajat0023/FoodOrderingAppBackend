@@ -14,6 +14,7 @@ import javax.validation.constraints.Size;
 
 })
 
+
 public class CouponEntity {
 
     @javax.persistence.Id
@@ -34,6 +35,15 @@ public class CouponEntity {
     @Column(name = "percent")
     @NotNull
     private Integer percent;
+
+    public CouponEntity(@NotNull @Size(max = 200) String uuid, @Size(max = 255) String couponName, @NotNull Integer percent) {
+        this.uuid = uuid;
+        this.couponName = couponName;
+        this.percent = percent;
+    }
+
+    public CouponEntity() {
+    }
 
     public Integer getId() {
         return Id;

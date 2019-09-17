@@ -6,12 +6,13 @@ import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "customer_address")
+@NamedQuery(name="customerByAdressId",query = "select ca from CustomerAddressEntity ca where ca.addressId.Id=:addressId and ca.customerId.Id=:customerId")
 public class CustomerAddressEntity {
 
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @NotNull
+
     private Integer Id;
 
     @OneToOne(cascade = CascadeType.REMOVE)

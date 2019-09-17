@@ -1,7 +1,7 @@
 package com.upgrad.FoodOrderingApp.service.dao;
 
 import com.upgrad.FoodOrderingApp.service.entity.CouponEntity;
-import com.upgrad.FoodOrderingApp.service.entity.OrdersEntity;
+import com.upgrad.FoodOrderingApp.service.entity.OrderEntity;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.*;
@@ -41,17 +41,18 @@ public class OrderRepository {
     }
 
 
-    public void savePlacedOrder(OrdersEntity transaction) {
+    public OrderEntity savePlacedOrder(OrderEntity transaction) {
 
         entityManager.persist(transaction);
+        return transaction;
     }
 
 
-    public List<OrdersEntity> getAllPastOrdersOfCustomer(String customerId) {
+    public List<OrderEntity> getAllPastOrdersOfCustomer(String customerId) {
 
-        List<OrdersEntity> orders = null;
+        List<OrderEntity> orders = null;
         try {
-            TypedQuery<OrdersEntity> query = entityManager.createNamedQuery("findOrdersByCustomerId", OrdersEntity.class);
+            TypedQuery<OrderEntity> query = entityManager.createNamedQuery("findOrdersByCustomerId", OrderEntity.class);
 
             query.setParameter("customerId", customerId);
             orders = query.getResultList();

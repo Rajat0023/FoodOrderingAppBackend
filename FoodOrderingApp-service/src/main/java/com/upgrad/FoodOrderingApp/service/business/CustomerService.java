@@ -13,13 +13,9 @@ public class CustomerService {
     private CustomerRepository customerRepository;
 
 
-    public CustomerEntity getCustomer(String customerId)  {
+    public CustomerEntity getCustomer(String accessToken) throws AuthorizationFailedException {
 
-        CustomerEntity customerEntity = customerRepository.getCustomer(customerId);
-
-
-
-
+        CustomerEntity customerEntity = customerRepository.getCustomer(accessToken);
 
         return customerEntity;
     }
