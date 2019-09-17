@@ -20,7 +20,7 @@ public class ControllerExceptionHandler {
 
         errorResponse.setCode(e.getCode());
         errorResponse.setMessage(e.getErrorMessage());
-        return new ResponseEntity<>(errorResponse, HttpStatus.UNAUTHORIZED);
+        return new ResponseEntity<>(errorResponse, HttpStatus.FORBIDDEN);
     }
 
     @ExceptionHandler(CouponNotFoundException.class)
@@ -28,7 +28,7 @@ public class ControllerExceptionHandler {
 
         errorResponse.setCode(e.getCode());
         errorResponse.setMessage(e.getErrorMessage());
-        return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
+        return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
     }
 
 
@@ -37,7 +37,7 @@ public class ControllerExceptionHandler {
 
         errorResponse.setCode(e.getCode());
         errorResponse.setMessage(e.getErrorMessage());
-        return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
+        return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(PaymentMethodNotFoundException.class)
@@ -45,7 +45,7 @@ public class ControllerExceptionHandler {
 
         errorResponse.setCode(e.getCode());
         errorResponse.setMessage(e.getErrorMessage());
-        return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
+        return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(RestaurantNotFoundException.class)
@@ -53,7 +53,7 @@ public class ControllerExceptionHandler {
 
         errorResponse.setCode(e.getCode());
         errorResponse.setMessage(e.getErrorMessage());
-        return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
+        return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(ItemNotFoundException.class)
@@ -61,7 +61,7 @@ public class ControllerExceptionHandler {
 
         errorResponse.setCode(e.getCode());
         errorResponse.setMessage(e.getErrorMessage());
-        return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
+        return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
     }
 
 
