@@ -7,6 +7,9 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "orders")
+@NamedQueries({
+        @NamedQuery(name = "findOrderByAddressId", query = "Select o from Orders o where o.addressId.Id = :addressId")
+})
 public class Orders {
 
     @Id
