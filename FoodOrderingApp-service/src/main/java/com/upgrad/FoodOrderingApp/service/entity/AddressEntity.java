@@ -26,7 +26,7 @@ public class AddressEntity {
 
   @Column(name = "flat_buil_number")
   @Size(max = 255)
-  private String flatNumber;
+  private String flatBuilNo;
 
   @Column(name = "locality")
   @Size(max = 255)
@@ -66,12 +66,12 @@ public class AddressEntity {
     this.uuid = uuid;
   }
 
-  public String getFlatNumber() {
-    return flatNumber;
+  public String getFlatBuilNo() {
+    return flatBuilNo;
   }
 
-  public void setFlatNumber(String flatNumber) {
-    this.flatNumber = flatNumber;
+  public void setFlatBuilNo(String flatBuilNo) {
+    this.flatBuilNo = flatBuilNo;
   }
 
   public String getLocality() {
@@ -114,11 +114,11 @@ public class AddressEntity {
     this.customerAddress = customerAddress;
   }
 
-  public Integer isActive() {
+  public Integer getActive() {
     return active;
   }
 
   public void setActive(Integer active) {
     this.active = active;
   }
-    }
+  }

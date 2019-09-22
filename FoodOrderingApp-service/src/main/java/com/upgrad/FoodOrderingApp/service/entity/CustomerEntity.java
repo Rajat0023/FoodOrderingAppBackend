@@ -3,6 +3,7 @@ package com.upgrad.FoodOrderingApp.service.entity;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.List;
 
 @Entity
 @Table(name = "customer")
@@ -50,6 +51,9 @@ public class CustomerEntity {
     @Size(max = 255)
     @NotNull
     private String salt;
+
+    @OneToMany(mappedBy = "customer")
+    private List<CustomerAddress> customerAddress;
 
     public Integer getId() {
         return Id;
@@ -113,5 +117,13 @@ public class CustomerEntity {
 
     public void setSalt(String salt) {
         this.salt = salt;
+    }
+
+    public List<CustomerAddress> getCustomerAddress() {
+        return customerAddress;
+    }
+
+    public void setCustomerAddress(List<CustomerAddress> customerAddress) {
+        this.customerAddress = customerAddress;
     }
 }
