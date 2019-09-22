@@ -1,4 +1,4 @@
-package com.upgrad.FoodOrderingApp.service.businness;
+package com.upgrad.FoodOrderingApp.service.business;
 
 
 import org.springframework.stereotype.Component;
@@ -12,7 +12,9 @@ import java.security.spec.InvalidKeySpecException;
 import java.util.Base64;
 import java.util.Random;
 
-
+/**
+ *
+ */
 @Component
 public class PasswordCryptographyProvider {
 
@@ -76,6 +78,12 @@ public class PasswordCryptographyProvider {
         }
     }
 
+    /**
+     *
+     * @param bytes
+     * @return
+     */
+
     private static String bytesToHex(byte[] bytes) {
         char[] hexChars = new char[bytes.length * 2];
         for (int j = 0; j < bytes.length; j++) {
@@ -86,10 +94,20 @@ public class PasswordCryptographyProvider {
         return new String(hexChars);
     }
 
+    /**
+     *
+     * @param bytes
+     * @return
+     */
     private static String getBase64EncodedBytesAsString(byte bytes[]) {
         return Base64.getEncoder().encodeToString(bytes);
     }
 
+    /**
+     *
+     * @param decode
+     * @return
+     */
     private static byte[] getBase64DecodedStringAsBytes(String decode) {
         return Base64.getDecoder().decode(decode);
     }

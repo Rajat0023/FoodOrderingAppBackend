@@ -5,9 +5,13 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+/**
+ * Address entity class
+ */
 @Entity
 @Table(name = "address")
-public class Address {
+@NamedQuery(name = "findAddressByUuid", query = "select a from AddressEntity a where a.uuid=:uuid")
+public class AddressEntity {
 
     @Id
     @Column(name = "id")
@@ -15,31 +19,42 @@ public class Address {
     @NotNull
     private Integer Id;
 
-    @Column(name= "uuid")
+    @Column(name = "uuid")
     @NotNull
     @Size(max = 200)
     private String uuid;
 
-    @Column(name="flat_buil_number")
+    @Column(name = "flat_buil_number")
     @Size(max = 255)
     private String flatNumber;
 
-    @Column(name="locality")
+    @Column(name = "locality")
     @Size(max = 255)
     private String locality;
 
-    @Column(name="city")
+    @Column(name = "city")
     @Size(max = 30)
     private String city;
 
-    @Column(name="pincode")
+    @Column(name = "pincode")
     @Size(max = 30)
     private String pinCode;
 
     @OneToOne(cascade = CascadeType.REMOVE)
-    @JoinColumn(name = "state_id",referencedColumnName = "id")
-    private State stateId;
+    @JoinColumn(name = "state_id", referencedColumnName = "id")
+    private StateEntity state;
 
+    public AddressEntity() {
+    }
+
+    public AddressEntity(@NotNull @Size(max = 200) String uuid, @Size(max = 255) String flatNumber, @Size(max = 255) String locality, @Size(max = 30) String city, @Size(max = 30) String pinCode, StateEntity state) {
+        this.uuid = uuid;
+        this.flatNumber = flatNumber;
+        this.locality = locality;
+        this.city = city;
+        this.pinCode = pinCode;
+        this.state = state;
+    }
 
     public Integer getId() {
         return Id;
@@ -89,12 +104,11 @@ public class Address {
         this.pinCode = pinCode;
     }
 
-    public State getStateId() {
-        return stateId;
+    public StateEntity getState() {
+        return state;
     }
 
-    public void setStateId(State stateId) {
-        this.stateId = stateId;
+    public void setState(StateEntity state) {
+        this.state = state;
     }
-
 }

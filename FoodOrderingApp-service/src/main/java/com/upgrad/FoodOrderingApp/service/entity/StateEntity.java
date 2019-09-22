@@ -3,10 +3,12 @@ package com.upgrad.FoodOrderingApp.service.entity;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-
+/**
+ * State entity class
+ */
 @Entity
 @Table(name = "state")
-public class State {
+public class StateEntity {
 
     @javax.persistence.Id
     @Column(name = "id")
@@ -22,6 +24,14 @@ public class State {
     @Column(name="state_name")
     @Size(max = 30)
     private String stateName;
+
+    public StateEntity() {
+    }
+
+    public StateEntity(@NotNull @Size(max = 200) String uuid, @Size(max = 30) String stateName) {
+        this.uuid = uuid;
+        this.stateName = stateName;
+    }
 
     public Integer getId() {
         return Id;

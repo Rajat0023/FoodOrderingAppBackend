@@ -4,10 +4,13 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
-
+/**
+ * CustomerAuth entity class
+ */
 @Entity
 @Table(name = "customer_auth")
-public class CustomerAuth {
+@NamedQuery(name = "getCustomerAuthInfo",query = "select c from CustomerAuthEntity c where c.accessToken =:accessToken")
+public class CustomerAuthEntity {
 
     @Id
     @Column(name = "id")
@@ -23,7 +26,7 @@ public class CustomerAuth {
     @OneToOne(cascade = CascadeType.REMOVE)
     @NotNull
     @JoinColumn(name = "customer_id", referencedColumnName = "id")
-    private Customer customerId;
+    private CustomerEntity customerId;
 
     @Column(name = "access_token")
     @NotNull
@@ -58,11 +61,11 @@ public class CustomerAuth {
         this.uuid = uuid;
     }
 
-    public Customer getCustomerId() {
+    public CustomerEntity getCustomerId() {
         return customerId;
     }
 
-    public void setCustomerId(Customer customerId) {
+    public void setCustomerId(CustomerEntity customerId) {
         this.customerId = customerId;
     }
 

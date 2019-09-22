@@ -3,10 +3,21 @@ package com.upgrad.FoodOrderingApp.service.entity;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-
+/**
+ * Coupon entity class
+ */
 @Entity
 @Table(name = "coupon")
-public class Coupon {
+
+@NamedQueries({
+        @NamedQuery(name = "findCouponByCouponName", query = "select c from CouponEntity c where c.couponName=:couponName"),
+        @NamedQuery(name = "findCouponByCouponId", query = "select c from CouponEntity c where c.uuid=:uuid")
+
+
+})
+
+
+public class CouponEntity {
 
     @javax.persistence.Id
     @Column(name = "id")
@@ -26,6 +37,15 @@ public class Coupon {
     @Column(name = "percent")
     @NotNull
     private Integer percent;
+
+    public CouponEntity(@NotNull @Size(max = 200) String uuid, @Size(max = 255) String couponName, @NotNull Integer percent) {
+        this.uuid = uuid;
+        this.couponName = couponName;
+        this.percent = percent;
+    }
+
+    public CouponEntity() {
+    }
 
     public Integer getId() {
         return Id;

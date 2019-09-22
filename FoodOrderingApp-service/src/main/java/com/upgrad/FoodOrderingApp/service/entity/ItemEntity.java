@@ -3,10 +3,13 @@ package com.upgrad.FoodOrderingApp.service.entity;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-
+/**
+ * Item entity class
+ */
 @Entity
 @Table(name = "item")
-public class Item {
+@NamedQuery(name="findItemByUuid",query = "select i from ItemEntity i where i.uuid=:uuid")
+public class ItemEntity {
 
     @Id
     @Column(name = "id")
