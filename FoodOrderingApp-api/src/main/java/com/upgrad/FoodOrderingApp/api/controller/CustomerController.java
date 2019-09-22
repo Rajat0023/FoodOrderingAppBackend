@@ -1,6 +1,5 @@
 package com.upgrad.FoodOrderingApp.api.controller;
 
-
 import com.upgrad.FoodOrderingApp.api.model.*;
 import com.upgrad.FoodOrderingApp.service.businness.CustomerService;
 import com.upgrad.FoodOrderingApp.service.entity.CustomerAuthEntity;
@@ -27,6 +26,18 @@ public class CustomerController {
 
   @Autowired private CustomerService customerService;
 
+  /**
+   * This method This method accepts an HTTP method of POST type and is used to sign-up a customer using
+   * the  SignupCustomerRequest model. The corresponding fields of the user are set using the Request
+   * model fields. These parameters are passed to the Service layer where the business logic
+   * implementation takes place. Response Entity generic class provided Spring is used to map the
+   * SignupCustomerResponse as an object. It produces a JSON Response,with HTTP status code as =
+   * CREATED(201) and corresponding message
+   *
+   * @param signupCustomerRequest
+   * @return Sign up Customer Response model & HTTP status in a Response Entity object
+   * @throws SignUpRestrictedException
+   */
   @PostMapping(
       value = "/customer/signup",
       consumes = MediaType.APPLICATION_JSON_UTF8_VALUE,
@@ -35,6 +46,13 @@ public class CustomerController {
       @RequestBody(required = false) final SignupCustomerRequest signupCustomerRequest)
       throws SignUpRestrictedException {
 
+    if (signupCustomerRequest.getFirstName().equals("")
+        || signupCustomerRequest.getEmailAddress().equals("")
+        || signupCustomerRequest.getContactNumber().equals("")
+        || signupCustomerRequest.getPassword().equals("")) {
+      throw new SignUpRestrictedException(
+          "SGR-005", "Except last name all fields should be filled");
+      }
     CustomerEntity customer = new CustomerEntity();
     customer.setFirstName(signupCustomerRequest.getFirstName());
     customer.setLastName(signupCustomerRequest.getLastName());
@@ -52,6 +70,17 @@ public class CustomerController {
     return new ResponseEntity<SignupCustomerResponse>(signupCustomerResponse, HttpStatus.CREATED);
   }
 
+  /**
+   * This method accepts an HTTP method of POST type and is used to authenticate a user on Login The
+   * access token of the Signed in User is provided as an input and is decoded and passed to the
+   * Service Layer for authentication purpose. Response Entity generic class provided by Spring is
+   * used to map the LoginResponse as an object. It produces a JSON Response,with HTTP status code
+   * as = OK(200) and corresponding message
+   *
+   * @param authorizationHeader
+   * @return LoginResponse model with HTTP header, HTTP status in a Response Entity object
+   * @throws AuthenticationFailedException
+   */
   @PostMapping(
       value = "/customer/login",
       consumes = MediaType.APPLICATION_JSON_UTF8_VALUE,
@@ -62,6 +91,12 @@ public class CustomerController {
 
     byte[] decode = Base64.getDecoder().decode(authorizationHeader.split("Basic ")[1]);
     String decodedText = new String(decode);
+    int index = decodedText.indexOf(":");
+    if (decodedText.substring(index, decodedText.length() - 1).equals("")
+        || index == 0) {
+      throw new AuthenticationFailedException(
+          "ATH-003", "Incorrect format of decoded customer name and password");
+    }
     String[] credentials = decodedText.split(":");
     String userName = credentials[0];
     String password = credentials[1];
@@ -78,9 +113,8 @@ public class CustomerController {
     List<String> header = new ArrayList<>();
     header.add("access-token");
     headers.setAccessControlExposeHeaders(header);
-
     return new ResponseEntity<LoginResponse>(loginResponse, headers, HttpStatus.OK);
-  }
+    }
 
   @PostMapping(
       value = "/customer/logout",

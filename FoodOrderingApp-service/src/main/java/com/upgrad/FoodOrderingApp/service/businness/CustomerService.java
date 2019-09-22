@@ -76,11 +76,6 @@ public class CustomerService {
   }
 
   public CustomerAuthEntity authenticate(String userName, String password) throws AuthenticationFailedException {
-
-    //        if (!decodedText.contains(":")){
-    //            throw new AuthenticationFailedException("ATH-003", "Incorrect format of decoded
-    // customer name and password");
-    //        }
   CustomerEntity customer = customerDao.getContactNumber(userName);
     if (customer == null) {
       throw new AuthenticationFailedException("ATH-001","This contact number has not been registered!");
