@@ -4,14 +4,24 @@ import com.upgrad.FoodOrderingApp.service.entity.CouponEntity;
 import com.upgrad.FoodOrderingApp.service.entity.OrderEntity;
 import org.springframework.stereotype.Repository;
 
-import javax.persistence.*;
+import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
+import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 import java.util.List;
 
+/**
+ *
+ */
 @Repository
 public class OrderRepository {
     @PersistenceContext
     EntityManager entityManager;
 
+    /**
+     * @param couponName
+     * @return
+     */
     public CouponEntity getCouponByCouponName(String couponName) {
         CouponEntity couponEntity = null;
 
@@ -26,6 +36,10 @@ public class OrderRepository {
         return couponEntity;
     }
 
+    /**
+     * @param uuid
+     * @return
+     */
     public CouponEntity getCouponByCouponId(String uuid) {
         CouponEntity couponEntity = null;
 
@@ -40,14 +54,20 @@ public class OrderRepository {
         return couponEntity;
     }
 
-
+    /**
+     * @param transaction
+     * @return
+     */
     public OrderEntity savePlacedOrder(OrderEntity transaction) {
 
         entityManager.persist(transaction);
         return transaction;
     }
 
-
+    /**
+     * @param customerId
+     * @return
+     */
     public List<OrderEntity> getAllPastOrdersOfCustomer(String customerId) {
 
         List<OrderEntity> orders = null;

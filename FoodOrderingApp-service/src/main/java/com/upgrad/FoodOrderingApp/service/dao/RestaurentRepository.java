@@ -8,12 +8,19 @@ import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
+/**
+ *
+ */
 @Repository
 public class RestaurentRepository {
     @PersistenceContext
     EntityManager entityManager;
 
-
+    /**
+     *
+     * @param uuid
+     * @return
+     */
     public RestaurantEntity getRestaurent(String uuid) {
         RestaurantEntity restaurantEntity = null;
         try {

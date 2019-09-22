@@ -6,12 +6,21 @@ import com.upgrad.FoodOrderingApp.service.exception.AuthorizationFailedException
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+/**
+ *
+ */
 @Service
 public class CustomerService {
 
     @Autowired
     private CustomerRepository customerRepository;
 
+    /**
+     *
+     * @param accessToken
+     * @return
+     * @throws AuthorizationFailedException
+     */
 
     public CustomerEntity getCustomer(String accessToken) throws AuthorizationFailedException {
 

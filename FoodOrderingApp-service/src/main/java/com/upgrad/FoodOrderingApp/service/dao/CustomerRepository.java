@@ -18,9 +18,13 @@ public class CustomerRepository {
     @PersistenceContext
     private EntityManager entityManager;
 
-
+    /**
+     * @param accessToken
+     * @return
+     * @throws AuthorizationFailedException
+     */
     public CustomerEntity getCustomer(String accessToken) throws AuthorizationFailedException {
-        CustomerAuthEntity customerAuthEntity=null;
+        CustomerAuthEntity customerAuthEntity = null;
         CustomerEntity customerEntity = null;
         try {
             TypedQuery<CustomerAuthEntity> query1 = entityManager.createNamedQuery("getCustomerAuthInfo", CustomerAuthEntity.class);
@@ -36,12 +40,12 @@ public class CustomerRepository {
                 throw new AuthorizationFailedException("ATHR-003", "Your session is expired. Log in again to access this endpoint");
             }
 
-if(customerAuthEntity!=null) {
-    TypedQuery<CustomerEntity> query2 = entityManager.createNamedQuery("getCustomerByUuid", CustomerEntity.class);
-    query2.setParameter("customerUuid", customerAuthEntity.getCustomerId().getUuid());
+            if (customerAuthEntity != null) {
+                TypedQuery<CustomerEntity> query2 = entityManager.createNamedQuery("getCustomerByUuid", CustomerEntity.class);
+                query2.setParameter("customerUuid", customerAuthEntity.getCustomerId().getUuid());
 
-    customerEntity = query2.getSingleResult();
-}
+                customerEntity = query2.getSingleResult();
+            }
 
         } catch (NoResultException e) {
 

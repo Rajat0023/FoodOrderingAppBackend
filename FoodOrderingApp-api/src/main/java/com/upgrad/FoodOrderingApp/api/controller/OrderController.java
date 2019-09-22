@@ -16,6 +16,9 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.UUID;
 
+/**
+ * This class handles all requests related to placing of an order in checkout page
+ */
 @Controller
 @RequestMapping("/order")
 public class OrderController {
@@ -33,25 +36,33 @@ public class OrderController {
     @Autowired
     private ItemService itemService;
 
-
+    /**
+     * retrieves a coupon details based upon its name,from static table
+     *
+     * @param couponName
+     * @param accessToken
+     * @return
+     * @throws AuthorizationFailedException
+     * @throws CouponNotFoundException
+     */
     @GetMapping(path = "/coupon/{coupon_name}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<CouponDetailsResponse> getCouponByCouponName(@PathVariable("coupon_name") String couponName,
 
                                                                        @RequestHeader("authorization") String accessToken) throws AuthorizationFailedException, CouponNotFoundException {
 
 
-        CustomerEntity customerEntity = customerService.getCustomer(accessToken.split("Bearer ")[1]);
+        customerService.getCustomer(accessToken.split("Bearer ")[1]);
 
         if (couponName != null && couponName.isEmpty()) {
             throw new CouponNotFoundException("CPF-002", "Coupon name field should not be empty");
         }
 
 
-//positive case, after all checks in service
+/**positive case, after all checks in service**/
         CouponEntity couponEntity = ordersService.getCouponByCouponName(couponName);
 
         CouponDetailsResponse couponDetailsResponse = new CouponDetailsResponse();
-//entity to dto pending
+/**entity to dto**/
         couponDetailsResponse.setCouponName(couponEntity.getCouponName());
         UUID uuid = UUID.fromString(couponEntity.getUuid());
         couponDetailsResponse.setId(uuid);
@@ -61,57 +72,61 @@ public class OrderController {
     }
 
 
-    //----------------------------------------------------------------------------------------------------------------------
+    /**
+     * retreives list of all historic orders of a customer
+     *
+     * @param accessToken
+     * @return
+     * @throws AuthorizationFailedException
+     */
 
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<CustomerOrderResponse> getPastOrders(@RequestHeader("authorization") String accessToken) throws AuthorizationFailedException {
-//authorizing the access token
+/**authorization checks**/
         CustomerEntity customerEntity = customerService.getCustomer(accessToken.split("Bearer ")[1]);
 
 
-//positive case, after all checks
+/**positive case, after all checks**/
         List<OrderEntity> list = ordersService.getOrdersByCustomers(customerEntity.getUuid());
         CustomerOrderResponse customerOrderResponse = new CustomerOrderResponse();
         List<OrderList> orderList = new LinkedList<OrderList>();
         List<ItemQuantityResponse> itemListPerOrder = new LinkedList<ItemQuantityResponse>();
-        //entity to dto pending
-        if(list!=null) {
+        /**entity to dto**/
+        if (list != null) {
             for (OrderEntity entity : list) {
                 OrderList orderModel = new OrderList();
 
-if(entity.getOrderItems()!=null) {
-    for (OrderItemEntity item : entity.getOrderItems()) {
-        ItemQuantityResponseItem itemQuantityResponseItem = new ItemQuantityResponseItem();
-        ItemQuantityResponse itemQuantityResponse = new ItemQuantityResponse();
-        UUID uuid = UUID.fromString(item.getItemId().getUuid());
-        itemQuantityResponseItem.setId(uuid); //how to convert integer to UUID
-        itemQuantityResponseItem.setItemName(item.getItemId().getItemName());
-        itemQuantityResponseItem.setItemPrice(item.getItemId().getPrice());
-        if (item.getItemId().getType().equals("0")) {
-            //veg
-            itemQuantityResponseItem.setType(ItemQuantityResponseItem.TypeEnum.VEG);
-        } else {
-            //non veg
-            itemQuantityResponseItem.setType(ItemQuantityResponseItem.TypeEnum.NON_VEG);
-        }
+                if (entity.getOrderItems() != null) {
+                    for (OrderItemEntity item : entity.getOrderItems()) {
+                        ItemQuantityResponseItem itemQuantityResponseItem = new ItemQuantityResponseItem();
+                        ItemQuantityResponse itemQuantityResponse = new ItemQuantityResponse();
+                        UUID uuid = UUID.fromString(item.getItemId().getUuid());
+                        itemQuantityResponseItem.setId(uuid); //how to convert integer to UUID
+                        itemQuantityResponseItem.setItemName(item.getItemId().getItemName());
+                        itemQuantityResponseItem.setItemPrice(item.getItemId().getPrice());
+                        if (item.getItemId().getType().equals("0")) {
+                            itemQuantityResponseItem.setType(ItemQuantityResponseItem.TypeEnum.VEG);
+                        } else {
+                            itemQuantityResponseItem.setType(ItemQuantityResponseItem.TypeEnum.NON_VEG);
+                        }
 
 
-        itemQuantityResponse.setItem(itemQuantityResponseItem);
-        itemQuantityResponse.setPrice(item.getPrice());
-        itemQuantityResponse.setQuantity(item.getQuantity());
+                        itemQuantityResponse.setItem(itemQuantityResponseItem);
+                        itemQuantityResponse.setPrice(item.getPrice());
+                        itemQuantityResponse.setQuantity(item.getQuantity());
 
-        itemListPerOrder.add(itemQuantityResponse);
-    }
-}
+                        itemListPerOrder.add(itemQuantityResponse);
+                    }
+                }
                 UUID uuid = UUID.fromString(entity.getUuid());
                 orderModel.setId(uuid);
 
-                //setting adress. keep note of nested child objects
+                /**setting adress. keep note of nested child objects**/
 
                 OrderListAddress orderListAddress = new OrderListAddress();
                 orderListAddress.setCity(entity.getAddress().getCity());
-                orderListAddress.setFlatBuildingName(entity.getAddress().getFlatNumber());  //check this out, if theres a static table to get building name
+                orderListAddress.setFlatBuildingName(entity.getAddress().getFlatNumber());
                 UUID addressUuid = UUID.fromString(entity.getAddress().getUuid());
                 orderListAddress.setId(addressUuid);
                 orderListAddress.setLocality(entity.getAddress().getLocality());
@@ -154,7 +169,7 @@ if(entity.getOrderItems()!=null) {
 
                 orderModel.setDate(entity.getDate().toString());
                 orderModel.setDiscount(entity.getDiscount());
-                orderModel.setItemQuantities(itemListPerOrder); //list of orders
+                orderModel.setItemQuantities(itemListPerOrder);
 
                 orderList.add(orderModel);
 
@@ -166,8 +181,19 @@ if(entity.getOrderItems()!=null) {
         return new ResponseEntity<>(customerOrderResponse, HttpStatus.OK);
     }
 
-
-    //-------------------------------------------------------------------------------------------------
+    /**
+     * save all details of on order , after its placed form checkout page
+     *
+     * @param placedOrder
+     * @param accessToken
+     * @return
+     * @throws AuthorizationFailedException
+     * @throws CouponNotFoundException
+     * @throws AddressNotFoundException
+     * @throws PaymentMethodNotFoundException
+     * @throws RestaurantNotFoundException
+     * @throws ItemNotFoundException
+     */
 
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -175,18 +201,18 @@ if(entity.getOrderItems()!=null) {
                                                              @RequestHeader("authorization") String accessToken) throws AuthorizationFailedException, CouponNotFoundException,
             AddressNotFoundException, PaymentMethodNotFoundException, RestaurantNotFoundException, ItemNotFoundException {
 
-//authorizing the access token
+/**authorization checks**/
 
         CustomerEntity customerEntity = customerService.getCustomer(accessToken.split("Bearer ")[1]);
 
 
-//positive case, after all checks
+/**positive case, after all checks**/
         OrderEntity ordersEntity = new OrderEntity();
+        /**reteiving all required child entity objects**/
         CouponEntity couponEntity = ordersService.getCouponByCouponId(placedOrder.getCouponEntityId().toString());
         PaymentEntity paymentEntity = paymentService.getPaymentByUUID(placedOrder.getPaymentEntityId().toString());
         AddressEntity addressEntity = addressService.getAddressByUUID(placedOrder.getAddressId(), customerEntity);
         RestaurantEntity restaurant = restaurantService.restaurantByUUID(placedOrder.getRestaurantId().toString());
-
 
 
         List<ItemQuantity> cartItemlist = placedOrder.getItemQuantities();
@@ -204,9 +230,9 @@ if(entity.getOrderItems()!=null) {
             items.add(orderItem);
         }
 
-        //populating the required entity fields
+        /**populating the required entity fields**/
 
-        ordersEntity.setUuid(UUID.randomUUID().toString());  //random number
+        ordersEntity.setUuid(UUID.randomUUID().toString());
         ordersEntity.setBill(placedOrder.getBill().doubleValue());
         ordersEntity.setDiscount(placedOrder.getDiscount().doubleValue());
         Date date = new Date();
@@ -231,7 +257,7 @@ if(entity.getOrderItems()!=null) {
         SaveOrderResponse saveOrderResponse = new SaveOrderResponse();
         saveOrderResponse.setId(ordersEntity.getUuid());
         saveOrderResponse.setStatus("ORDER SUCCESSFULLY PLACED");
-        return new ResponseEntity<SaveOrderResponse>(saveOrderResponse, HttpStatus.CREATED);
+        return new ResponseEntity<>(saveOrderResponse, HttpStatus.CREATED);
     }
 
 }

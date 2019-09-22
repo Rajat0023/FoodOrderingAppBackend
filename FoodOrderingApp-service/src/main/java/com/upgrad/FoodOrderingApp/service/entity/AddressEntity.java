@@ -5,6 +5,9 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+/**
+ *
+ */
 @Entity
 @Table(name = "address")
 @NamedQuery(name = "findAddressByUuid", query = "select a from AddressEntity a where a.uuid=:uuid")

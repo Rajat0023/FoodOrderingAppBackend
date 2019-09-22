@@ -3,7 +3,9 @@ package com.upgrad.FoodOrderingApp.service.entity;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-
+/**
+ *
+ */
 @Entity
 @Table(name = "restaurant")
 @NamedQuery(name = "getRestaurentById", query = "select r from RestaurantEntity r where r.uuid=:uuid")

@@ -10,12 +10,17 @@ import java.time.temporal.ChronoField;
 import java.util.Date;
 import java.util.UUID;
 
-
+/**
+ *
+ */
 public class JwtTokenProvider {
     private static final String TOKEN_ISSUER = "https://FoodOrderingApp.io";
 
     private final Algorithm algorithm;
 
+    /**
+     * @param secret
+     */
     public JwtTokenProvider(final String secret) {
         try {
             algorithm = Algorithm.HMAC512(secret);
@@ -24,6 +29,12 @@ public class JwtTokenProvider {
         }
     }
 
+    /**
+     * @param customerUuid
+     * @param issuedDateTime
+     * @param expiresDateTime
+     * @return
+     */
     public String generateToken(final String customerUuid, final ZonedDateTime issuedDateTime, final ZonedDateTime expiresDateTime) {
 
         final Date issuedAt = new Date(issuedDateTime.getLong(ChronoField.INSTANT_SECONDS));

@@ -9,13 +9,19 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import java.util.List;
 
+/**
+ *
+ */
 @Repository
 public class PaymentsRepository {
 
     @PersistenceContext
     EntityManager entityManager;
 
-
+    /**
+     *
+     * @return
+     */
     public List<PaymentEntity> getPaymentMediums() {
 
         List<PaymentEntity> paymentMediumList = null;
@@ -28,7 +34,11 @@ public class PaymentsRepository {
         return paymentMediumList;
     }
 
-
+    /**
+     *
+     * @param uuid
+     * @return
+     */
     public PaymentEntity getPayment(String uuid) {
         PaymentEntity paymentEntity = null;
         try {

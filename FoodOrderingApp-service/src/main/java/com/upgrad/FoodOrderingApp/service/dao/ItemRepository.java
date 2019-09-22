@@ -9,12 +9,20 @@ import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
+/**
+ *
+ */
 @Repository
 public class ItemRepository {
 
     @PersistenceContext
     private EntityManager entityManager;
 
+    /**
+     *
+     * @param uuid
+     * @return
+     */
     public ItemEntity getItemById(String uuid) {
         ItemEntity itemEntity = null;
         try {

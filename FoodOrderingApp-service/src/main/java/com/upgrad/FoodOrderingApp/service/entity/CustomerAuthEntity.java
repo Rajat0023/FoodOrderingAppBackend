@@ -4,7 +4,9 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
-
+/**
+ *
+ */
 @Entity
 @Table(name = "customer_auth")
 @NamedQuery(name = "getCustomerAuthInfo",query = "select c from CustomerAuthEntity c where c.accessToken =:accessToken")

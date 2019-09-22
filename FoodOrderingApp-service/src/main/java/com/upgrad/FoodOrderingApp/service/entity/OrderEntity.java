@@ -11,7 +11,9 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
-
+/**
+ *
+ */
 @Entity
 @Table(name = "orders")
 @NamedQuery(name = "findOrdersByCustomerId", query = "select o from OrderEntity o where o.customer.uuid =:customerId")

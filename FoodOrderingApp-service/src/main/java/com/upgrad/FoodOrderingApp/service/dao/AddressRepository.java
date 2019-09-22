@@ -9,13 +9,20 @@ import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
+/**
+ *
+ */
 @Repository
 public class AddressRepository {
     @PersistenceContext
     private EntityManager entityManager;
 
 
-
+    /**
+     *
+     * @param uuid
+     * @return
+     */
     public AddressEntity getAddress(String uuid) {
         AddressEntity addressEntity = null;
         try {
@@ -31,6 +38,12 @@ public class AddressRepository {
         return addressEntity;
     }
 
+    /**
+     *
+     * @param customerId
+     * @param addressId
+     * @return
+     */
     public CustomerAddressEntity getCustomer(Integer customerId,Integer addressId) {
         CustomerAddressEntity customerAddressEntity =null;
         try {

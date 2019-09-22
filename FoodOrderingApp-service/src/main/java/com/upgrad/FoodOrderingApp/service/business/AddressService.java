@@ -7,15 +7,25 @@ import com.upgrad.FoodOrderingApp.service.entity.CustomerEntity;
 import com.upgrad.FoodOrderingApp.service.exception.AddressNotFoundException;
 import com.upgrad.FoodOrderingApp.service.exception.AuthorizationFailedException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
+/**
+ *
+ */
 @Service
 public class AddressService {
 
     @Autowired
     private AddressRepository addressRepository;
 
+    /**
+     *
+     * @param id
+     * @param customerEntity
+     * @return
+     * @throws AddressNotFoundException
+     * @throws AuthorizationFailedException
+     */
     public AddressEntity getAddressByUUID(String id, CustomerEntity customerEntity) throws AddressNotFoundException, AuthorizationFailedException {
 
         CustomerAddressEntity customerAddressEntity ;

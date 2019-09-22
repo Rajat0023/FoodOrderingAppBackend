@@ -4,8 +4,6 @@ import com.upgrad.FoodOrderingApp.api.model.PaymentListResponse;
 import com.upgrad.FoodOrderingApp.api.model.PaymentResponse;
 import com.upgrad.FoodOrderingApp.service.business.CustomerService;
 import com.upgrad.FoodOrderingApp.service.business.PaymentService;
-import com.upgrad.FoodOrderingApp.service.entity.CustomerAuthEntity;
-import com.upgrad.FoodOrderingApp.service.entity.CustomerEntity;
 import com.upgrad.FoodOrderingApp.service.entity.PaymentEntity;
 import com.upgrad.FoodOrderingApp.service.exception.AuthorizationFailedException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +19,9 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.UUID;
 
+/**
+ * This class handles request to retreive payment related information before placing of order in checkout page
+ */
 @Controller
 @RequestMapping("/payment")
 public class PaymentController {
@@ -29,9 +30,15 @@ public class PaymentController {
     @Autowired
     private CustomerService customerService;
 
-
+    /**
+     *retreives list of payment mediums from static table.
+     * @param accessToken
+     * @return
+     * @throws AuthorizationFailedException
+     */
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<PaymentListResponse> getPaymentMethods(@RequestHeader("authorization") String accessToken) throws AuthorizationFailedException {
+
         customerService.getCustomer(accessToken.split("Bearer ")[1]);
 
 
@@ -48,6 +55,6 @@ public class PaymentController {
         PaymentListResponse paymentListResponse = new PaymentListResponse();
 
         paymentListResponse.setPaymentMethods(paymentResponseList);
-        return new ResponseEntity<PaymentListResponse>(paymentListResponse, HttpStatus.OK);
+        return new ResponseEntity<>(paymentListResponse, HttpStatus.OK);
     }
 }

@@ -6,13 +6,20 @@ import org.springframework.stereotype.Repository;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+/**
+ *
+ */
 @Repository
 public class OrderItemRepository {
 
     @PersistenceContext
     private EntityManager entityManager;
 
-
+    /**
+     *
+     * @param o
+     * @return
+     */
     public OrderItemEntity saveOrderItem(OrderItemEntity o) {
         try {
 
