@@ -26,6 +26,14 @@ public class StateEntity {
     @Size(max = 30)
     private String stateName;
 
+    public StateEntity(@NotNull @Size(max = 200) String uuid, @Size(max = 30) String stateName) {
+        this.uuid = uuid;
+        this.stateName = stateName;
+    }
+
+    public StateEntity() {
+    }
+
     public Integer getId() {
         return Id;
     }
