@@ -100,4 +100,13 @@ public class AddressService {
     }
     return addressEntityList;
   }
+
+    public List<StateEntity> getAllStates() {
+      if (addressDao.findAllStates() == null){
+          return Collections.emptyList();
+      }
+      else {
+          return addressDao.findAllStates();
+      }
     }
+}

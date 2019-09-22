@@ -71,4 +71,16 @@ public class AddressDao {
             return null;
         }
     }
+
+
+    public  List<StateEntity> findAllStates() {
+        try {
+            return entityManager.createNamedQuery("findAllStates", StateEntity.class)
+                    .getResultList();
+        }
+        catch (NoResultException nre) {
+            return null;
+        }
+    }
+
 }
