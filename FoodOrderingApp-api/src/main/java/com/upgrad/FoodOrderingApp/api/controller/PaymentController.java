@@ -32,7 +32,7 @@ public class PaymentController {
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<PaymentListResponse> getPaymentMethods(@RequestHeader("authorization") String accessToken) throws AuthorizationFailedException {
-        CustomerEntity customerEntity = customerService.getCustomer(accessToken);
+        customerService.getCustomer(accessToken.split("Bearer ")[1]);
 
 
         List<PaymentEntity> paymentEntityList = paymentsService.getAllPaymentMethods();
