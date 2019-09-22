@@ -18,6 +18,10 @@ public class CategoryDao {
 
     @PersistenceContext private EntityManager entityManager;
 
+    /**
+     * This method fetches all the categories
+     */
+
     public List<CategoryEntity> getAllCategories(){
         List<CategoryEntity> categoryList = null;
 
@@ -26,6 +30,10 @@ public class CategoryDao {
         categoryList = query.getResultList();
         return categoryList;
     }
+
+    /**
+     * This method fetches the category for the given Uuid from the database
+     */
 
     public List<CategoryEntity> getCategoryById(String uuid){
         List<CategoryEntity> categoryList = null;
@@ -37,6 +45,9 @@ public class CategoryDao {
         return categoryList;
     }
 
+    /**
+     * This method fetches the category for the given name from the database
+     */
     public List<CategoryEntity> getCategoryNameById(String categoryName){
         List<CategoryEntity> categoryList = null;
 
@@ -47,6 +58,9 @@ public class CategoryDao {
         return categoryList;
     }
 
+    /**
+     * This method fetches the category for the given restaurantId from the database
+     */
 
     public List<RestaurantCategory> getCategoryByRestaurant(Integer restaurantId){
 
@@ -55,6 +69,9 @@ public class CategoryDao {
         return query.getResultList();
     }
 
+    /**
+     * This method fetches the items for the given categoryId from the database
+     */
     public List<CategoryItem> getItemByCategoryId(String uuid){
 
         TypedQuery<CategoryItem> query = entityManager.createNamedQuery("getItemByCategory",CategoryItem.class);
@@ -62,5 +79,3 @@ public class CategoryDao {
         return query.getResultList();
     }
 }
-
-

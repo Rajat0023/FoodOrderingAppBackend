@@ -1,6 +1,5 @@
 package com.upgrad.FoodOrderingApp.service.dao;
 
-//import com.upgrad.FoodOrderingApp.service.entity.Customer;
 import com.upgrad.FoodOrderingApp.service.entity.CustomerAuth;
 import org.springframework.stereotype.Repository;
 
@@ -15,6 +14,10 @@ public class CustomerDao {
     @PersistenceContext
     private EntityManager entityManager;
 
+    /**
+     * This method validates accessToken for the provides accessToken by user from the database
+     */
+
     public CustomerAuth getAuthToken(String accessToken)
     {
         try{
@@ -28,4 +31,3 @@ public class CustomerDao {
         }
     }
 }
-

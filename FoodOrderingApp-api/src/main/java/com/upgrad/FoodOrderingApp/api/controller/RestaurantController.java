@@ -5,12 +5,10 @@ import com.upgrad.FoodOrderingApp.service.businness.CustomerService;
 import com.upgrad.FoodOrderingApp.service.businness.RestaurantService;
 import com.upgrad.FoodOrderingApp.service.entity.*;
 import com.upgrad.FoodOrderingApp.service.exception.*;
-import io.swagger.models.auth.In;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import com.upgrad.FoodOrderingApp.api.model.*;
 
@@ -38,6 +36,11 @@ public class RestaurantController {
     CategoryService categoryService;
 
 
+    /**
+     * This method is used to handle http request of user to get all restaurants
+     *
+     * @return returns ResponseEntity enbedded with model object or error object
+     */
 
     @RequestMapping(
             method = GET,
@@ -71,7 +74,7 @@ public class RestaurantController {
             response.setAddress(addressResponse);
 
             List<CategoryList> restaurantCategory = new LinkedList<>();
-            for (RestaurantCategory category : categoryService.getCategoriesByRestaurant(restaurantEntity.getId())) {
+            for (RestaurantCategory category : categoryService.getCategoriesByRestaurant(restaurantEntity.getId().toString())) {
                 CategoryList restCategory = new CategoryList();
                 restCategory.setCategoryName(category.getCategoryId().getCategoryName());
                 restaurantCategory.add(restCategory);
@@ -87,6 +90,13 @@ public class RestaurantController {
         return new ResponseEntity<List<RestaurantDetailsResponse>>(list, HttpStatus.OK);
 
     }
+
+    /**
+     * This method is used to handle http request of user to get restaurants by input name
+     *
+     * @return returns ResponseEntity enbedded with model object or error object
+     * @throws RestaurantNotFoundException
+     */
 
     @RequestMapping(
             method = GET,
@@ -123,7 +133,7 @@ public class RestaurantController {
             rList.setId(UUID.fromString(restaurantEntity.getUuid()));
 
             List<CategoryList> restaurantCategoryName = new LinkedList<>();
-            for(RestaurantCategory restaurantCategory1 : categoryService.getCategoriesByRestaurant(restaurantEntity.getId())){
+            for(RestaurantCategory restaurantCategory1 : categoryService.getCategoriesByRestaurant(restaurantEntity.getId().toString())){
                 CategoryList categoryList = new CategoryList();
                 categoryList.setCategoryName(restaurantCategory1.getCategoryId().getCategoryName());
                 restaurantCategoryName.add(categoryList);
@@ -138,6 +148,13 @@ public class RestaurantController {
         Collections.sort(restaurantList,new CustomerRatingComparator());
         return new ResponseEntity<List<RestaurantDetailsResponse>>(restaurantList, HttpStatus.OK);
     }
+
+    /**
+     * This method is used to handle http request of user to get restaurants by given categoryId
+     *
+     * @return returns ResponseEntity enbedded with model object or error object
+     * @throws CategoryNotFoundException
+     */
 
     @RequestMapping(
             method = GET,
@@ -174,7 +191,7 @@ public class RestaurantController {
             restaurantDetailsResponse.setAddress(addressResponse);
 
             List<CategoryList> nameResponses = new ArrayList<>();
-            for (RestaurantCategory categoryName : categoryService.getCategoriesByRestaurant(category.getRestaurantId().getId())) {
+            for (RestaurantCategory categoryName : categoryService.getCategoriesByRestaurant(category.getRestaurantId().getId().toString())) {
                 CategoryList categoryNameResponse = new CategoryList();
                 categoryNameResponse.setCategoryName(categoryName.getCategoryId().getCategoryName());
                 nameResponses.add(categoryNameResponse);
@@ -189,6 +206,13 @@ public class RestaurantController {
 
         return new ResponseEntity<List<RestaurantDetailsResponse>>(restaurantList, HttpStatus.OK);
     }
+
+    /**
+     * This method used to handle http request of user to get restaurant by input restaurantId
+     *
+     * @return returns ResponseEntity enbedded with model object or error object
+     * @throws RestaurantNotFoundException
+     */
 
     @RequestMapping(
             method = GET,
@@ -227,7 +251,7 @@ public class RestaurantController {
             restList.setId((UUID.fromString(restaurantEntity.getUuid())));
 
             List<CategoryList> categoryLists = new ArrayList<>();
-            for(RestaurantCategory restaurantCategory : categoryService.getCategoriesByRestaurant(restaurantEntity.getId())){
+            for(RestaurantCategory restaurantCategory : categoryService.getCategoriesByRestaurant(restaurantEntity.getId().toString())){
                 CategoryList categoryList = new CategoryList();
                 categoryList.setCategoryName(restaurantCategory.getCategoryId().getCategoryName());
                 categoryLists.add(categoryList);
@@ -244,6 +268,14 @@ public class RestaurantController {
         return new ResponseEntity<List<RestaurantDetailsResponse>>(restaurantLists, HttpStatus.OK);
     }
 
+
+    /**
+     * This method is used to handle http request of user to update the restaurant rating
+     *
+     * @param customerRating
+     * @return returns ResponseEntity enbedded with model object or error object
+     * @throws AuthorizationFailedException,RestaurantNotFoundException,InvalidRatingException
+     */
 
     @RequestMapping(
             method = PUT,
@@ -270,7 +302,7 @@ public class RestaurantController {
         return new ResponseEntity<RestaurantUpdatedResponse>(restaurantUpdatedResponse,HttpStatus.OK);
     }
 
-    /**to sort restaurants by ratings*/
+    /**comparator method used to sort restaurants by ratings*/
     static class CustomerRatingComparator implements Comparator<RestaurantDetailsResponse> {
 
         @Override
@@ -280,7 +312,7 @@ public class RestaurantController {
         }
     }
 
-    /**to sort categories based on alphabetical order */
+    /**comparator method used to sort categories based on alphabetical order */
     static class CategoriesComparator implements Comparator<CategoryList>{
 
         @Override
@@ -291,6 +323,4 @@ public class RestaurantController {
     }
 
 }
-
-
 

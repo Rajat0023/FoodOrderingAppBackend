@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public enum GenericExceptionCode {
-    /** These enum constants cover all errors related to code SGR-001 */
+    /** These enum constants cover all errors*/
     SGR_001("SGR-001", "This contact number is already registered! Try other contact number."),
 
     RNF_003("RNF-003", "Restaurant name field should not be empty"),
@@ -24,7 +24,6 @@ public enum GenericExceptionCode {
     ATHR_003("ATHR-003", "Your session is expired. Log in again to access this endpoint."),
 
     IRE_001("IRE-001", "Restaurant should be in the range of 1 to 5");
-
 
 
     private static final Map<String, GenericExceptionCode> Lookup = new HashMap<>();

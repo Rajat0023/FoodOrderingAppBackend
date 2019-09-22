@@ -1,19 +1,12 @@
 package com.upgrad.FoodOrderingApp.service.dao;
 
-//import com.upgrad.FoodOrderingApp.service.entity.Category;
 import com.upgrad.FoodOrderingApp.service.entity.CategoryEntity;
-//import com.upgrad.FoodOrderingApp.service.entity.Item;
-//import com.upgrad.FoodOrderingApp.service.entity.Restaurant;
 import com.upgrad.FoodOrderingApp.service.entity.ItemEntity;
 import com.upgrad.FoodOrderingApp.service.entity.RestaurantCategory;
 import com.upgrad.FoodOrderingApp.service.entity.RestaurantEntity;
-import com.upgrad.FoodOrderingApp.service.exception.RestaurantNotFoundException;
-import org.apache.commons.lang3.reflect.Typed;
-import org.springframework.data.annotation.Persistent;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.*;
-import java.awt.*;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
@@ -27,6 +20,10 @@ public class RestaurantDao {
     @PersistenceContext
     private EntityManager entityManager;
 
+    /**
+     * This method fetches all the restaurants
+     */
+
     public List<RestaurantEntity> getAllRestaurants() {
         List<RestaurantEntity> restaurantList = null;
 
@@ -36,6 +33,10 @@ public class RestaurantDao {
 
         return restaurantList;
     }
+
+    /**
+     * This method fetches all the restaurant by given name from the database
+     */
 
     public List<RestaurantEntity> getRestaurantByName(String restaurantName) {
         List<RestaurantEntity> restaurantList = null;
@@ -70,6 +71,10 @@ public class RestaurantDao {
         return query.getResultList();
     }
 
+    /**
+     * This method fetches all the restaurant by given categoryId
+     */
+
     public List<RestaurantCategory> getRestaurantByCategoryId(String uuid) {
         List<RestaurantCategory> restaurantList = null;
         TypedQuery<RestaurantCategory> query =
@@ -78,6 +83,10 @@ public class RestaurantDao {
         restaurantList = query.getResultList();
         return restaurantList;
     }
+
+    /**
+     * This method fetches all the restaurant by given uuid
+     */
 
     public List<RestaurantEntity> restaurantByUUID(String uuid) {
         List<RestaurantEntity> restaurantList = null;
@@ -89,6 +98,10 @@ public class RestaurantDao {
 
     }
 
+    /**
+     * This method fetches all the item for the given restaurant uuid
+     */
+
     public List<ItemEntity> getItemByRestaurant(UUID uuid) {
         List<ItemEntity> items = null;
         TypedQuery<ItemEntity> query =
@@ -97,6 +110,23 @@ public class RestaurantDao {
         return items;
 
     }
+
+    /**
+     * This method fetches all the popular item for a restaurant
+     */
+
+    public List<ItemEntity> getItemByPopular(UUID uuid){
+        List<ItemEntity> items = null;
+        TypedQuery<ItemEntity> query =
+                entityManager.createNamedQuery("mostPopularItem", ItemEntity.class);
+
+        items = query.getResultList();
+        return items;
+    }
+
+    /**
+     * This method updates the restaurant rating
+     */
 
     public RestaurantEntity updateRestaurantRating(String restaurantId, BigDecimal customerRating) {
 
@@ -125,5 +155,3 @@ public class RestaurantDao {
     }
 
 }
-
-

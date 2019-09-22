@@ -2,7 +2,6 @@ package com.upgrad.FoodOrderingApp.api.controller;
 
 import com.upgrad.FoodOrderingApp.api.model.*;
 import com.upgrad.FoodOrderingApp.service.businness.CategoryService;
-//import com.upgrad.FoodOrderingApp.service.entity.Category;
 import com.upgrad.FoodOrderingApp.service.businness.ItemService;
 import com.upgrad.FoodOrderingApp.service.entity.CategoryEntity;
 import com.upgrad.FoodOrderingApp.service.entity.CategoryItem;
@@ -14,7 +13,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-
 
 import java.util.*;
 
@@ -30,6 +28,12 @@ public class CategoryController {
     @Autowired
     ItemService itemService;
 
+    /**
+     * This method used to handle http request of user to get all Categories
+     *
+     * @return returns ResponseEntity enbedded with model object or error object
+     */
+
     @RequestMapping(
             method = GET,
             path = "/category",
@@ -40,7 +44,7 @@ public class CategoryController {
 
         List<CategoryList> list = new LinkedList<>();
 
-        for(CategoryEntity categoryEntity: categoryService.getCategoriesList()){
+        for(CategoryEntity categoryEntity: categoryService.getAllCategoriesOrderedByName()){
             CategoryList categoryListResponse = new CategoryList();
 
             categoryListResponse.setCategoryName(categoryEntity.getCategoryName());
@@ -51,6 +55,14 @@ public class CategoryController {
         Collections.sort(list,new RestaurantController.CategoriesComparator());
         return new ResponseEntity<List<CategoryList>>(list, HttpStatus.OK);
     }
+
+
+    /**
+     * This method used to handle http request of user to get Category by categoryId
+     *
+     * @return returns ResponseEntity enbedded with model object or error object
+     * @throws CategoryNotFoundException
+     */
 
     @RequestMapping(
             method = GET,
@@ -98,5 +110,3 @@ public class CategoryController {
         return new ResponseEntity<List<CategoryList>>(categoryLists,HttpStatus.OK);
     }
 }
-
-

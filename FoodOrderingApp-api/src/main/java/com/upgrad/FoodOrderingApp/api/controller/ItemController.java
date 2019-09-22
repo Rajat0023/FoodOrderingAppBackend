@@ -1,10 +1,8 @@
 package com.upgrad.FoodOrderingApp.api.controller;
 
 import com.upgrad.FoodOrderingApp.api.model.ItemList;
-import com.upgrad.FoodOrderingApp.api.model.ItemListResponse;
 import com.upgrad.FoodOrderingApp.service.businness.ItemService;
 import com.upgrad.FoodOrderingApp.service.businness.RestaurantService;
-//import com.upgrad.FoodOrderingApp.service.entity.Item;
 import com.upgrad.FoodOrderingApp.service.entity.ItemEntity;
 import com.upgrad.FoodOrderingApp.service.exception.RestaurantNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +29,13 @@ public class ItemController {
     @Autowired
     ItemService itemService;
 
+    /**
+     * This method used to handle http request of user to get items based on their popularity
+     *
+     * @return returns ResponseEntity enbedded with model object or error object
+     * @throws RestaurantNotFoundException
+     */
+
     @RequestMapping(
             method = GET,
             path = "/item/restaurant/{restaurant_id}",
@@ -40,7 +45,7 @@ public class ItemController {
             @PathVariable("restaurant_id") final UUID restaurantId)
             throws RestaurantNotFoundException {
 
-        List<ItemEntity> restaurantListResponses = itemService.getItemByRestaurantId(restaurantId);
+        List<ItemEntity> restaurantListResponses = itemService.getItemsByPopularity(restaurantId);
 
         List<ItemList> itemLists = new ArrayList<>();
 
@@ -56,7 +61,6 @@ public class ItemController {
                 itemTypeEnum =  ItemList.ItemTypeEnum.NON_VEG;
             }
 
-
             itemList.setItemType(itemTypeEnum);
             itemList.setId(UUID.fromString(restaurantItem.getUuid()));
             itemList.setItemName(restaurantItem.getItemName());
@@ -68,4 +72,3 @@ public class ItemController {
         return new ResponseEntity<List<ItemList>>(itemLists, HttpStatus.OK);
     }
 }
-
