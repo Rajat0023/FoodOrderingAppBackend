@@ -10,7 +10,7 @@ import javax.persistence.TypedQuery;
 import java.util.List;
 
 /**
- *
+ * Payment repository class
  */
 @Repository
 public class PaymentsRepository {
@@ -19,7 +19,7 @@ public class PaymentsRepository {
     EntityManager entityManager;
 
     /**
-     *
+     * getPaymentMediums
      * @return
      */
     public List<PaymentEntity> getPaymentMediums() {
@@ -35,7 +35,7 @@ public class PaymentsRepository {
     }
 
     /**
-     *
+     * getPayment
      * @param uuid
      * @return
      */

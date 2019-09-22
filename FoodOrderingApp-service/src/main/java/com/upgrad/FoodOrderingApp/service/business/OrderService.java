@@ -13,7 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 /**
- *
+ * Business service class, for order placing functionalities
  */
 @Service
 @Transactional

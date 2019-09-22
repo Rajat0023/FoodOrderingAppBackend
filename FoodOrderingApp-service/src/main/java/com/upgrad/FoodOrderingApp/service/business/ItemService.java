@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
- *
+ * Business service class for functionalities related to Item entities
  */
 @Service
 public class ItemService {

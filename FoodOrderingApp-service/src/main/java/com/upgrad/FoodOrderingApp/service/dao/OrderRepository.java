@@ -11,7 +11,7 @@ import javax.persistence.TypedQuery;
 import java.util.List;
 
 /**
- *
+ * Order repository class
  */
 @Repository
 public class OrderRepository {
@@ -19,6 +19,7 @@ public class OrderRepository {
     EntityManager entityManager;
 
     /**
+     * getCouponByCouponName
      * @param couponName
      * @return
      */
@@ -37,6 +38,7 @@ public class OrderRepository {
     }
 
     /**
+     * getCouponByCouponId
      * @param uuid
      * @return
      */

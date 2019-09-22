@@ -10,7 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 /**
- *
+ * Business service class for functionalities related to payment entity
  */
 @Service
 @Transactional

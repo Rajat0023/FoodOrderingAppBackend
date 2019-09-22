@@ -5,7 +5,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 /**
- *
+ * CustomerAuth entity class
  */
 @Entity
 @Table(name = "customer_auth")

@@ -7,7 +7,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 /**
- *
+ * OrderItem repository class
  */
 @Repository
 public class OrderItemRepository {
@@ -16,7 +16,7 @@ public class OrderItemRepository {
     private EntityManager entityManager;
 
     /**
-     *
+     * saveOrderItem
      * @param o
      * @return
      */

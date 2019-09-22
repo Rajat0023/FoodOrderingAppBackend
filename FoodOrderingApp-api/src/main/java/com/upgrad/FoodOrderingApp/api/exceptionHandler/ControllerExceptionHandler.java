@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 /**
- *
+ * This is global exception handler
  */
 @ControllerAdvice
 public class ControllerExceptionHandler {

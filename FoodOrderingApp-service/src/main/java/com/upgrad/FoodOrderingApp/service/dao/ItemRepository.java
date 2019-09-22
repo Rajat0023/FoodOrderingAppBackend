@@ -10,7 +10,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
 /**
- *
+ * Item repository class
  */
 @Repository
 public class ItemRepository {
@@ -19,7 +19,7 @@ public class ItemRepository {
     private EntityManager entityManager;
 
     /**
-     *
+     * getItemById
      * @param uuid
      * @return
      */

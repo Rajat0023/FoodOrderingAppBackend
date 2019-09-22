@@ -10,7 +10,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
 /**
- *
+ * Address repository class
  */
 @Repository
 public class AddressRepository {
@@ -19,7 +19,7 @@ public class AddressRepository {
 
 
     /**
-     *
+     * getAddress
      * @param uuid
      * @return
      */
@@ -39,7 +39,7 @@ public class AddressRepository {
     }
 
     /**
-     *
+     * getCustomer
      * @param customerId
      * @param addressId
      * @return

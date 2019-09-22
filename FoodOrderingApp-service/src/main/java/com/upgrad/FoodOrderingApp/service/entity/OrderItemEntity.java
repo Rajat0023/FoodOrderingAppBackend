@@ -3,7 +3,7 @@ package com.upgrad.FoodOrderingApp.service.entity;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 /**
- *
+ * OrderItem entity class
  */
 @Entity
 @Table(name = "order_item")

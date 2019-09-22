@@ -12,6 +12,9 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import java.time.LocalDateTime;
 
+/**
+ * Customer repository class
+ */
 @Repository
 public class CustomerRepository {
 
@@ -19,6 +22,7 @@ public class CustomerRepository {
     private EntityManager entityManager;
 
     /**
+     * getCustomer
      * @param accessToken
      * @return
      * @throws AuthorizationFailedException
@@ -30,7 +34,7 @@ public class CustomerRepository {
             TypedQuery<CustomerAuthEntity> query1 = entityManager.createNamedQuery("getCustomerAuthInfo", CustomerAuthEntity.class);
             query1.setParameter("accessToken", accessToken);
             customerAuthEntity = query1.getSingleResult();
-            //user validations
+
             if (customerAuthEntity == null) {
                 throw new AuthorizationFailedException("ATHR-001", "Customer is not Logged in");
 

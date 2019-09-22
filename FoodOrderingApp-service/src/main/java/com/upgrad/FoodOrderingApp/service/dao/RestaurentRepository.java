@@ -9,7 +9,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
 /**
- *
+ * Restaurent repository class
  */
 @Repository
 public class RestaurentRepository {
@@ -17,7 +17,7 @@ public class RestaurentRepository {
     EntityManager entityManager;
 
     /**
-     *
+     * getRestaurent
      * @param uuid
      * @return
      */

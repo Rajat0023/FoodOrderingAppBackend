@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
- *
+ * Business class for functionalities related to address entity
  */
 @Service
 public class AddressService {

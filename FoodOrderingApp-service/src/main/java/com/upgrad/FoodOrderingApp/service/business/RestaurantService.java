@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
- *
+ *Business service class for functionalities related to Restaurent entity
  */
 @Service
 public class RestaurantService {

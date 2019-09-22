@@ -5,7 +5,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 /**
- * 
+ * Category entity class
  */
 @Entity
 @Table(name = "category")
