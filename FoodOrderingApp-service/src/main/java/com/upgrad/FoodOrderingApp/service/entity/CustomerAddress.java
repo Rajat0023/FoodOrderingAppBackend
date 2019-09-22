@@ -6,23 +6,27 @@ import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "customer_address")
+@NamedQueries({
+        @NamedQuery(
+                name = "findAllAddressByCustomerId",
+                query = "Select c from CustomerAddress c where c.customer.Id = :customerId")
+})
 public class CustomerAddress {
 
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @NotNull
     private Integer Id;
 
     @OneToOne(cascade = CascadeType.REMOVE)
     @NotNull
     @JoinColumn(name = "address_id", referencedColumnName = "id")
-    private AddressEntity addressId;
+    private AddressEntity address;
 
     @ManyToOne(cascade = CascadeType.REMOVE)
     @NotNull
     @JoinColumn(name = "customer_id", referencedColumnName = "id")
-    private CustomerEntity customerId;
+    private CustomerEntity customer;
 
     public Integer getId() {
         return Id;
@@ -32,19 +36,17 @@ public class CustomerAddress {
         Id = id;
     }
 
-    public AddressEntity getAddressId() {
-        return addressId;
+    public AddressEntity getAddress() { return address; }
+
+    public void setAddress(AddressEntity address) {
+        this.address = address;
     }
 
-    public void setAddressId(AddressEntity addressId) {
-        this.addressId = addressId;
+    public CustomerEntity getCustomer() {
+        return customer;
     }
 
-    public CustomerEntity getCustomerId() {
-        return customerId;
-    }
-
-    public void setCustomerId(CustomerEntity customerId) {
-        this.customerId = customerId;
+    public void setCustomer(CustomerEntity customer) {
+        this.customer = customer;
     }
 }

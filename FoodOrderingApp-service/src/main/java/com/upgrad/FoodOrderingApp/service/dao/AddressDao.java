@@ -1,15 +1,13 @@
 package com.upgrad.FoodOrderingApp.service.dao;
 
 
-import com.upgrad.FoodOrderingApp.service.entity.AddressEntity;
-import com.upgrad.FoodOrderingApp.service.entity.CustomerAddress;
-import com.upgrad.FoodOrderingApp.service.entity.Orders;
-import com.upgrad.FoodOrderingApp.service.entity.StateEntity;
+import com.upgrad.FoodOrderingApp.service.entity.*;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
+import java.util.List;
 
 @Repository
 public class AddressDao {
@@ -57,6 +55,17 @@ public class AddressDao {
             return entityManager.createNamedQuery("findOrderByAddressId", Orders.class)
                     .setParameter("addressId",addressEntity.getId())
                     .getSingleResult();
+        }
+        catch (NoResultException nre) {
+            return null;
+        }
+    }
+
+    public List<CustomerAddress> getAllAddressByCustomerId(CustomerEntity customerEntity) {
+        try {
+            return entityManager.createNamedQuery("findAllAddressByCustomerId", CustomerAddress.class)
+                    .setParameter("customerId",customerEntity.getId())
+                    .getResultList();
         }
         catch (NoResultException nre) {
             return null;

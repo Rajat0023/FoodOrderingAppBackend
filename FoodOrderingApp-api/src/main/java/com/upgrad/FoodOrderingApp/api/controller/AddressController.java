@@ -1,11 +1,10 @@
 package com.upgrad.FoodOrderingApp.api.controller;
 
-import com.upgrad.FoodOrderingApp.api.model.DeleteAddressResponse;
-import com.upgrad.FoodOrderingApp.api.model.SaveAddressRequest;
-import com.upgrad.FoodOrderingApp.api.model.SaveAddressResponse;
+import com.upgrad.FoodOrderingApp.api.model.*;
 import com.upgrad.FoodOrderingApp.service.businness.AddressService;
 import com.upgrad.FoodOrderingApp.service.businness.CustomerService;
 import com.upgrad.FoodOrderingApp.service.entity.AddressEntity;
+import com.upgrad.FoodOrderingApp.service.entity.CustomerAddress;
 import com.upgrad.FoodOrderingApp.service.entity.CustomerEntity;
 import com.upgrad.FoodOrderingApp.service.entity.StateEntity;
 import com.upgrad.FoodOrderingApp.service.exception.AddressNotFoundException;
@@ -17,6 +16,8 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -45,7 +46,7 @@ public class AddressController {
     StateEntity state = addressService.getStateByUUID(saveAddressRequest.getStateUuid());
     AddressEntity address = new AddressEntity();
     address.setCity(saveAddressRequest.getCity());
-    address.setFlatNumber(saveAddressRequest.getFlatBuildingName());
+    address.setFlatBuilNo(saveAddressRequest.getFlatBuildingName());
     address.setLocality(saveAddressRequest.getLocality());
     address.setCity(saveAddressRequest.getCity());
     address.setPinCode(saveAddressRequest.getPincode());
@@ -59,9 +60,38 @@ public class AddressController {
     return new ResponseEntity<SaveAddressResponse>(saveAddressResponse, HttpStatus.CREATED);
   }
 
+  @GetMapping(value = "/address/customer", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+  public ResponseEntity<AddressListResponse> getCustomerAddress(
+      @RequestHeader("authorization") final String authorization)
+      throws AuthorizationFailedException {
+    String[] authorizationHeader = authorization.split("Bearer ");
+    String accessToken = "";
+    for (String i : authorizationHeader) {
+      accessToken = i;
+    }
+    CustomerEntity customer = customerService.getCustomer(accessToken);
+      List<AddressEntity> allAddress = addressService.getAllAddress(customer);
+      List<AddressList> lists = new ArrayList<>();
+    for (AddressEntity addressEntity : allAddress) {
+      AddressList addressList = new AddressList();
+      addressList.setId(UUID.fromString(addressEntity.getUuid()));
+      addressList.setFlatBuildingName(addressEntity.getFlatBuilNo());
+      addressList.setLocality(addressEntity.getLocality());
+      addressList.setCity(addressEntity.getCity());
+      addressList.setPincode(addressEntity.getPinCode());
+      addressList.setState(
+          new AddressListState()
+              .id(UUID.fromString(addressEntity.getState().getUuid()))
+              .stateName(addressEntity.getState().getStateName()));
+      lists.add(addressList);
+          }
+      AddressListResponse addressListResponse = new AddressListResponse();
+      addressListResponse.setAddresses(lists);
+      return new ResponseEntity<AddressListResponse>(addressListResponse,HttpStatus.OK);
+  }
+
   @DeleteMapping(
       value = "/address/{address_id}",
-//      consumes = MediaType.APPLICATION_JSON_UTF8_VALUE,
       produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
   public ResponseEntity<DeleteAddressResponse> deleteCustomerAddress(
       @RequestHeader("authorization") final String authorization,

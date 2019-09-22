@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.UUID;
+import java.util.*;
 import java.util.regex.Pattern;
 
 @Service
@@ -29,7 +29,7 @@ public class AddressService {
 
   public AddressEntity saveAddress(AddressEntity address, CustomerEntity customer)
       throws SaveAddressException {
-    if (address.getFlatNumber().equals("")
+    if (address.getFlatBuilNo().equals("")
         || address.getLocality().equals("")
         || address.getCity().equals("")
         || address.getPinCode().equals("")
@@ -68,6 +68,13 @@ public class AddressService {
     return addressEntity;
   }
 
+    /**
+     * This method checks if the address which the user wants to delete is associated with any order or not
+     * If yes, the active flag is set to 0, otherwise the address is removed.
+     *
+     * @param addressEntity
+     * @return The addressEntity which is removed
+     */
   public AddressEntity deleteAddress(AddressEntity addressEntity) {
     Orders orders = addressDao.getOrderByAddressId(addressEntity);
     if (orders != null) {
@@ -77,4 +84,20 @@ public class AddressService {
       return addressDao.deleteAddress(addressEntity);
     }
   }
-}
+
+    /**
+     * This method retrieves the list of all customer addresses from the CustomerAddress table by taking the
+     * customerId
+     * @param customerEntity
+     * @return List of Address
+     */
+  public List<AddressEntity> getAllAddress(CustomerEntity customerEntity) {
+    List<CustomerAddress> customerAddressList =
+        addressDao.getAllAddressByCustomerId(customerEntity);
+    List<AddressEntity> addressEntityList = new ArrayList<>();
+    for (CustomerAddress customerAddress : customerAddressList) {
+      addressEntityList.add(customerAddress.getAddress());
+    }
+    return addressEntityList;
+  }
+    }
