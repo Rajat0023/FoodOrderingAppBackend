@@ -16,12 +16,12 @@ public class RestaurantItem {
     @OneToOne(cascade = CascadeType.REMOVE)
     @NotNull
     @JoinColumn(name = "item_id", referencedColumnName = "id")
-    private Item itemId;
+    private ItemEntity itemId;
 
     @ManyToOne(cascade = CascadeType.REMOVE)
     @NotNull
     @JoinColumn(name = "restaurant_id", referencedColumnName = "id")
-    private Restaurant restaurantId;
+    private RestaurantEntity restaurantId;
 
     public Integer getId() {
         return Id;
@@ -31,19 +31,19 @@ public class RestaurantItem {
         Id = id;
     }
 
-    public Item getItemId() {
+    public ItemEntity getItemId() {
         return itemId;
     }
 
-    public void setItemId(Item itemId) {
+    public void setItemId(ItemEntity itemId) {
         this.itemId = itemId;
     }
 
-    public Restaurant getRestaurantId() {
+    public RestaurantEntity getRestaurantId() {
         return restaurantId;
     }
 
-    public void setRestaurantId(Restaurant restaurantId) {
+    public void setRestaurantId(RestaurantEntity restaurantId) {
         this.restaurantId = restaurantId;
     }
 
