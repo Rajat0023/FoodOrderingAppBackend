@@ -116,6 +116,13 @@ public class CustomerController {
     return new ResponseEntity<LoginResponse>(loginResponse, headers, HttpStatus.OK);
     }
 
+  /**
+   * This method accepts a method of POST request and the customer is logged out if the accessToken is present
+   * in the DB
+   * @param authorization
+   * @return LogoutResponse model with HTTP status in a Response Entity object
+   * @throws AuthorizationFailedException
+   */
   @PostMapping(
       value = "/customer/logout",
       consumes = MediaType.APPLICATION_JSON_UTF8_VALUE,
@@ -135,6 +142,15 @@ public class CustomerController {
     return new ResponseEntity<LogoutResponse>(logoutResponse, HttpStatus.OK);
   }
 
+  /**
+   * This method accepts a request of PUT type and is used to update the details of the Customer
+   * Consumes JSON consisting of FirstName and LastName of the user & produces a JSON response
+   * @param updateCustomerRequest
+   * @param authorization
+   * @return UpdateCustomerResponse, HTTP Status in a ResponseEntity object
+   * @throws AuthorizationFailedException
+   * @throws UpdateCustomerException
+   */
   @PutMapping(
       value = "/customer",
       consumes = MediaType.APPLICATION_JSON_UTF8_VALUE,
@@ -156,6 +172,14 @@ public class CustomerController {
     return new ResponseEntity<UpdateCustomerResponse>(updateCustomerResponse, HttpStatus.OK);
   }
 
+  /**
+   * This method accepts a request of PUT type and updates the password of a customer
+   * @param updatePasswordRequest
+   * @param authorization
+   * @return UpdatePasswordResponse, HTTP Status in a ResponseEntity object
+   * @throws UpdateCustomerException
+   * @throws AuthorizationFailedException
+   */
   @PutMapping(
       value = "/customer/password",
       consumes = MediaType.APPLICATION_JSON_UTF8_VALUE,

@@ -3,12 +3,17 @@ package com.upgrad.FoodOrderingApp.service.entity;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-/**
- * CategoryItem entity class
- */
+
 @Entity
 @Table(name = "category_item")
-public class CategoryItemEntity {
+
+@NamedQueries({
+        @NamedQuery(
+                name = "getItemByCategory",
+                query = "select c from CategoryItem c join ItemEntity i on c.itemId.Id = i.Id where c.categoryId.uuid = :uuid"
+        )
+})
+public class CategoryItem {
 
     @Id
     @Column(name = "id")

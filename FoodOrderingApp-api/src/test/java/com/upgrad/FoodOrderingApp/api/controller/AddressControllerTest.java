@@ -431,6 +431,6 @@ public class AddressControllerTest {
                 .andReturn().getResponse().getContentAsString();
 
         final StatesListResponse statesLists = new ObjectMapper().readValue(response, StatesListResponse.class);
-        assertNull(statesLists.getStates());
+        assertEquals(statesLists.getStates().size(),0); // For Empty List returned
     }
 }

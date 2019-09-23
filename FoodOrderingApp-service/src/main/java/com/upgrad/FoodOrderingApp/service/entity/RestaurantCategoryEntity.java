@@ -3,12 +3,20 @@ package com.upgrad.FoodOrderingApp.service.entity;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-/**
- * RestaurentCategory entity class
- */
+
 @Entity
 @Table(name = "restaurant_category")
-public class RestaurantCategoryEntity {
+@NamedQueries({
+        @NamedQuery(
+                name = "getCategoryByRestaurant",
+                query = "select rc from RestaurantCategory rc where rc.restaurantId.Id = :restaurantId"),
+        @NamedQuery(
+                name = "findRestaurantByCategoryId",
+                query = "select rc from RestaurantCategory rc join CategoryEntity c on rc.categoryId.Id = c.Id where c.uuid =   :uuid")
+})
+
+
+public class RestaurantCategory {
 
   @Id
   @Column(name = "id")
@@ -16,37 +24,37 @@ public class RestaurantCategoryEntity {
   @NotNull
   private Integer Id;
 
-    @OneToOne(cascade = CascadeType.REMOVE)
-    @NotNull
-    @JoinColumn(name = "restaurant_id", referencedColumnName = "id")
-    private RestaurantEntity restaurantId;
+  @OneToOne(cascade = CascadeType.REMOVE)
+  @NotNull
+  @JoinColumn(name = "restaurant_id", referencedColumnName = "id")
+  private RestaurantEntity restaurantId;
 
-    @ManyToOne(cascade = CascadeType.REMOVE)
-    @NotNull
-    @JoinColumn(name = "category_id", referencedColumnName = "id")
-    private CategoryEntity categoryId;
+  @ManyToOne(cascade = CascadeType.REMOVE)
+  @NotNull
+  @JoinColumn(name = "category_id", referencedColumnName = "id")
+  private CategoryEntity categoryId;
 
-    public Integer getId() {
-        return Id;
-    }
+  public Integer getId() {
+    return Id;
+  }
 
-    public void setId(Integer id) {
-        Id = id;
-    }
+  public void setId(Integer id) {
+    Id = id;
+  }
 
-    public RestaurantEntity getRestaurantId() {
-        return restaurantId;
-    }
+  public RestaurantEntity getRestaurantId() {
+    return restaurantId;
+  }
 
-    public void setRestaurantId(RestaurantEntity restaurantId) {
-        this.restaurantId = restaurantId;
-    }
+  public void setRestaurantId(RestaurantEntity restaurantId) {
+    this.restaurantId = restaurantId;
+  }
 
-    public CategoryEntity getCategoryId() {
-        return categoryId;
-    }
+  public CategoryEntity getCategoryId() {
+    return categoryId;
+  }
 
-    public void setCategoryId(CategoryEntity categoryId) {
-        this.categoryId = categoryId;
-    }
+  public void setCategoryId(CategoryEntity categoryId) {
+    this.categoryId = categoryId;
+  }
 }
