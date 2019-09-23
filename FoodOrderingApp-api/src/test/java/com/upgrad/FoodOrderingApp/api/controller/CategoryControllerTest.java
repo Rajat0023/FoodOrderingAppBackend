@@ -3,7 +3,7 @@
 //import com.fasterxml.jackson.databind.ObjectMapper;
 //import com.upgrad.FoodOrderingApp.api.model.CategoriesListResponse;
 //import com.upgrad.FoodOrderingApp.api.model.CategoryDetailsResponse;
-//import com.upgrad.FoodOrderingApp.service.businness.CategoryService;
+//import com.upgrad.FoodOrderingApp.service.business.CategoryService;
 //import com.upgrad.FoodOrderingApp.service.entity.CategoryEntity;
 //import com.upgrad.FoodOrderingApp.service.entity.ItemEntity;
 //import com.upgrad.FoodOrderingApp.service.exception.CategoryNotFoundException;
@@ -77,7 +77,7 @@
 //    @Test
 //    public void shouldNotGetCategoryByidIfCategoryIdIsEmpty() throws Exception {
 //        when(mockCategoryService.getCategoryById(anyString()))
-//                .thenThrow(new CategoryNotFoundException("CNF-001", "Category id field should not be empty"));
+//                .thenThrow(new CategoryNotFoundException("CNF-001", "CategoryEntity id field should not be empty"));
 //
 //        mockMvc
 //                .perform(get("/category/emptyString").contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))

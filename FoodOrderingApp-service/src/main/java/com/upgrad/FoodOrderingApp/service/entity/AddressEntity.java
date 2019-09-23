@@ -5,6 +5,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+/** Address entity class */
 @Entity
 @Table(name = "address")
 @NamedQueries({
@@ -17,6 +18,7 @@ public class AddressEntity {
   @Id
   @Column(name = "id")
   @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @NotNull
   private Integer Id;
 
   @Column(name = "uuid")
@@ -40,7 +42,7 @@ public class AddressEntity {
   @Size(max = 30)
   private String pinCode;
 
-  @ManyToOne
+  @OneToOne(cascade = CascadeType.REMOVE)
   @JoinColumn(name = "state_id", referencedColumnName = "id")
   private StateEntity state;
 
@@ -48,7 +50,24 @@ public class AddressEntity {
   private Integer active;
 
   @OneToOne(mappedBy = "address")
-  private CustomerAddress customerAddress;
+  private CustomerAddressEntity customerAddress;
+
+  public AddressEntity() {}
+
+  public AddressEntity(
+      @NotNull @Size(max = 200) String uuid,
+      @Size(max = 255) String flatNumber,
+      @Size(max = 255) String locality,
+      @Size(max = 30) String city,
+      @Size(max = 30) String pinCode,
+      StateEntity state) {
+    this.uuid = uuid;
+    this.flatBuilNo = flatNumber;
+    this.locality = locality;
+    this.city = city;
+    this.pinCode = pinCode;
+    this.state = state;
+  }
 
   public Integer getId() {
     return Id;
@@ -106,11 +125,11 @@ public class AddressEntity {
     this.state = state;
   }
 
-  public CustomerAddress getCustomerAddress() {
+  public CustomerAddressEntity getCustomerAddress() {
     return customerAddress;
   }
 
-  public void setCustomerAddress(CustomerAddress customerAddress) {
+  public void setCustomerAddress(CustomerAddressEntity customerAddress) {
     this.customerAddress = customerAddress;
   }
 
@@ -121,4 +140,4 @@ public class AddressEntity {
   public void setActive(Integer active) {
     this.active = active;
   }
-  }
+    }

@@ -2,26 +2,28 @@ package com.upgrad.FoodOrderingApp.service.entity;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-
+/**
+ * OrderItem entity class
+ */
 @Entity
 @Table(name = "order_item")
-public class OrderItem {
+public class OrderItemEntity {
 
       @Id
       @Column(name = "id")
       @GeneratedValue(strategy = GenerationType.IDENTITY)
-      @NotNull
+
       private Integer Id;
 
       @ManyToOne(cascade = CascadeType.REMOVE)
       @NotNull
       @JoinColumn(name = "order_id", referencedColumnName = "id")
-      private Orders orderId;
+      private OrderEntity orderId;
 
       @OneToOne
       @NotNull
       @JoinColumn(name = "item_id", referencedColumnName = "id")
-      private Item itemId;
+      private ItemEntity itemId;
 
       @Column(name = "quantity")
       @NotNull
@@ -39,19 +41,19 @@ public class OrderItem {
         Id = id;
     }
 
-    public Orders getOrderId() {
+    public OrderEntity getOrderId() {
         return orderId;
     }
 
-    public void setOrderId(Orders orderId) {
+    public void setOrderId(OrderEntity orderId) {
         this.orderId = orderId;
     }
 
-    public Item getItemId() {
+    public ItemEntity getItemId() {
         return itemId;
     }
 
-    public void setItemId(Item itemId) {
+    public void setItemId(ItemEntity itemId) {
         this.itemId = itemId;
     }
 

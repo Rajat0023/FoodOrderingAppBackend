@@ -41,7 +41,7 @@ public class AddressDao {
         }
     }
 
-    public void createCustomerAddress(CustomerAddress customerAddress) {
+    public void createCustomerAddress(CustomerAddressEntity customerAddress) {
         entityManager.persist(customerAddress);
     }
 
@@ -50,9 +50,9 @@ public class AddressDao {
         return addressEntity;
     }
 
-    public Orders getOrderByAddressId(AddressEntity addressEntity) {
+    public OrderEntity getOrderByAddressId(AddressEntity addressEntity) {
         try {
-            return entityManager.createNamedQuery("findOrderByAddressId", Orders.class)
+            return entityManager.createNamedQuery("findOrderByAddressId", OrderEntity.class)
                     .setParameter("addressId",addressEntity.getId())
                     .getSingleResult();
         }
@@ -61,9 +61,9 @@ public class AddressDao {
         }
     }
 
-    public List<CustomerAddress> getAllAddressByCustomerId(CustomerEntity customerEntity) {
+    public List<CustomerAddressEntity> getAllAddressByCustomerId(CustomerEntity customerEntity) {
         try {
-            return entityManager.createNamedQuery("findAllAddressByCustomerId", CustomerAddress.class)
+            return entityManager.createNamedQuery("findAllAddressByCustomerId", CustomerAddressEntity.class)
                     .setParameter("customerId",customerEntity.getId())
                     .getResultList();
         }

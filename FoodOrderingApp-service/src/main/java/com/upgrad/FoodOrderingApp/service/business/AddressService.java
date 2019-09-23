@@ -1,4 +1,4 @@
-package com.upgrad.FoodOrderingApp.service.businness;
+package com.upgrad.FoodOrderingApp.service.business;
 
 import com.upgrad.FoodOrderingApp.service.dao.AddressDao;
 import com.upgrad.FoodOrderingApp.service.entity.*;
@@ -48,7 +48,7 @@ public class AddressService {
     address.setUuid(UUID.randomUUID().toString());
     address.setActive(1);
     AddressEntity createdAddress = addressDao.createAddress(address);
-    CustomerAddress customerAddress = new CustomerAddress();
+    CustomerAddressEntity customerAddress = new CustomerAddressEntity();
     customerAddress.setCustomer(customer);
     customerAddress.setAddress(address);
     addressDao.createCustomerAddress(customerAddress);
@@ -76,7 +76,7 @@ public class AddressService {
      * @return The addressEntity which is removed
      */
   public AddressEntity deleteAddress(AddressEntity addressEntity) {
-    Orders orders = addressDao.getOrderByAddressId(addressEntity);
+    OrderEntity orders = addressDao.getOrderByAddressId(addressEntity);
     if (orders != null) {
       addressEntity.setActive(0);
       return addressEntity;
@@ -92,10 +92,10 @@ public class AddressService {
      * @return List of Address
      */
   public List<AddressEntity> getAllAddress(CustomerEntity customerEntity) {
-    List<CustomerAddress> customerAddressList =
+    List<CustomerAddressEntity> customerAddressList =
         addressDao.getAllAddressByCustomerId(customerEntity);
     List<AddressEntity> addressEntityList = new ArrayList<>();
-    for (CustomerAddress customerAddress : customerAddressList) {
+    for (CustomerAddressEntity customerAddress : customerAddressList) {
       addressEntityList.add(customerAddress.getAddress());
     }
     return addressEntityList;

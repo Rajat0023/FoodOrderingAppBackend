@@ -10,6 +10,7 @@ import org.springframework.web.context.request.WebRequest;
 
 @ControllerAdvice
 public class RestExceptionHandler {
+  private ErrorResponse errorResponse = new ErrorResponse();
 
   @ExceptionHandler(SignUpRestrictedException.class)
   public ResponseEntity<ErrorResponse> signUpRestrictedException(
@@ -21,41 +22,75 @@ public class RestExceptionHandler {
 
   @ExceptionHandler(AuthenticationFailedException.class)
   public ResponseEntity<ErrorResponse> authenticationFailedException(
-          AuthenticationFailedException exe, WebRequest request) {
+      AuthenticationFailedException exe, WebRequest request) {
     return new ResponseEntity<ErrorResponse>(
-            new ErrorResponse().code(exe.getCode()).message(exe.getErrorMessage()),
-            HttpStatus.UNAUTHORIZED);
+        new ErrorResponse().code(exe.getCode()).message(exe.getErrorMessage()),
+        HttpStatus.UNAUTHORIZED);
   }
 
   @ExceptionHandler(AuthorizationFailedException.class)
   public ResponseEntity<ErrorResponse> authorizationFailedException(
-          AuthorizationFailedException exe, WebRequest request) {
+      AuthorizationFailedException exe, WebRequest request) {
     return new ResponseEntity<ErrorResponse>(
-            new ErrorResponse().code(exe.getCode()).message(exe.getErrorMessage()),
-            HttpStatus.FORBIDDEN);
+        new ErrorResponse().code(exe.getCode()).message(exe.getErrorMessage()),
+        HttpStatus.FORBIDDEN);
   }
 
   @ExceptionHandler(UpdateCustomerException.class)
   public ResponseEntity<ErrorResponse> updateCustomerException(
-          UpdateCustomerException exe, WebRequest request) {
+      UpdateCustomerException exe, WebRequest request) {
     return new ResponseEntity<ErrorResponse>(
-            new ErrorResponse().code(exe.getCode()).message(exe.getErrorMessage()),
-            HttpStatus.BAD_REQUEST);
+        new ErrorResponse().code(exe.getCode()).message(exe.getErrorMessage()),
+        HttpStatus.BAD_REQUEST);
   }
 
   @ExceptionHandler(AddressNotFoundException.class)
   public ResponseEntity<ErrorResponse> addressNotFoundException(
-          AddressNotFoundException exe, WebRequest request) {
+      AddressNotFoundException exe, WebRequest request) {
     return new ResponseEntity<ErrorResponse>(
-            new ErrorResponse().code(exe.getCode()).message(exe.getErrorMessage()),
-            HttpStatus.NOT_FOUND);
+        new ErrorResponse().code(exe.getCode()).message(exe.getErrorMessage()),
+        HttpStatus.NOT_FOUND);
   }
 
   @ExceptionHandler(SaveAddressException.class)
   public ResponseEntity<ErrorResponse> saveAddressException(
-          SaveAddressException exe, WebRequest request) {
+      SaveAddressException exe, WebRequest request) {
     return new ResponseEntity<ErrorResponse>(
-            new ErrorResponse().code(exe.getCode()).message(exe.getErrorMessage()),
-            HttpStatus.BAD_REQUEST);
+        new ErrorResponse().code(exe.getCode()).message(exe.getErrorMessage()),
+        HttpStatus.BAD_REQUEST);
   }
-}
+
+  @ExceptionHandler(CouponNotFoundException.class)
+  public ResponseEntity<ErrorResponse> handleCouponNotFoundException(CouponNotFoundException e) {
+
+    errorResponse.setCode(e.getCode());
+    errorResponse.setMessage(e.getErrorMessage());
+    return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
+  }
+
+  @ExceptionHandler(PaymentMethodNotFoundException.class)
+  public ResponseEntity<ErrorResponse> handlePaymentNotFoundException(
+      PaymentMethodNotFoundException e) {
+
+    errorResponse.setCode(e.getCode());
+    errorResponse.setMessage(e.getErrorMessage());
+    return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
+  }
+
+  @ExceptionHandler(RestaurantNotFoundException.class)
+  public ResponseEntity<ErrorResponse> handleRestaurantNotFoundException(
+      RestaurantNotFoundException e) {
+
+    errorResponse.setCode(e.getCode());
+    errorResponse.setMessage(e.getErrorMessage());
+    return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
+  }
+
+  @ExceptionHandler(ItemNotFoundException.class)
+  public ResponseEntity<ErrorResponse> handleItemNotFoundException(ItemNotFoundException e) {
+
+    errorResponse.setCode(e.getCode());
+    errorResponse.setMessage(e.getErrorMessage());
+    return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
+  }
+  }
