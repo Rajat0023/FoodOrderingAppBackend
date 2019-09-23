@@ -7,6 +7,11 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "customer_auth")
+@NamedQueries({
+        @NamedQuery(
+                name= "customerAuthTokenByAccessToken",
+                query = "select c from CustomerAuth c where c.accessToken = :accessToken")
+})
 public class CustomerAuth {
 
     @Id
@@ -23,7 +28,7 @@ public class CustomerAuth {
     @OneToOne(cascade = CascadeType.REMOVE)
     @NotNull
     @JoinColumn(name = "customer_id", referencedColumnName = "id")
-    private Customer customerId;
+    private CustomerEntity customerId;
 
     @Column(name = "access_token")
     @NotNull
@@ -58,11 +63,11 @@ public class CustomerAuth {
         this.uuid = uuid;
     }
 
-    public Customer getCustomerId() {
+    public CustomerEntity getCustomerId() {
         return customerId;
     }
 
-    public void setCustomerId(Customer customerId) {
+    public void setCustomerId(CustomerEntity customerId) {
         this.customerId = customerId;
     }
 

@@ -6,6 +6,13 @@ import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "category_item")
+
+@NamedQueries({
+        @NamedQuery(
+                name = "getItemByCategory",
+                query = "select c from CategoryItem c join ItemEntity i on c.itemId.Id = i.Id where c.categoryId.uuid = :uuid"
+        )
+})
 public class CategoryItem {
 
     @Id
@@ -17,12 +24,12 @@ public class CategoryItem {
     @OneToOne(cascade = CascadeType.REMOVE)
     @NotNull
     @JoinColumn(name = "item_id", referencedColumnName = "id")
-    private Item itemId;
+    private ItemEntity itemId;
 
     @ManyToOne(cascade = CascadeType.REMOVE)
     @NotNull
     @JoinColumn(name = "category_id", referencedColumnName = "id")
-    private Category categoryId;
+    private CategoryEntity categoryId;
 
     public Integer getId() {
         return Id;
@@ -32,19 +39,19 @@ public class CategoryItem {
         Id = id;
     }
 
-    public Item getItemId() {
+    public ItemEntity getItemId() {
         return itemId;
     }
 
-    public void setItemId(Item itemId) {
+    public void setItemId(ItemEntity itemId) {
         this.itemId = itemId;
     }
 
-    public Category getCategoryId() {
+    public CategoryEntity getCategoryId() {
         return categoryId;
     }
 
-    public void setCategoryId(Category categoryId) {
+    public void setCategoryId(CategoryEntity categoryId) {
         this.categoryId = categoryId;
     }
 }
