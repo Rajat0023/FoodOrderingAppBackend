@@ -9,14 +9,14 @@ import javax.validation.constraints.NotNull;
 @NamedQueries({
         @NamedQuery(
                 name = "getCategoryByRestaurant",
-                query = "select rc from RestaurantCategory rc where rc.restaurantId.Id = :restaurantId"),
+                query = "select rc from RestaurantCategoryEntity rc where rc.restaurantId.Id = :restaurantId"),
         @NamedQuery(
                 name = "findRestaurantByCategoryId",
-                query = "select rc from RestaurantCategory rc join CategoryEntity c on rc.categoryId.Id = c.Id where c.uuid =   :uuid")
+                query = "select rc from RestaurantCategoryEntity rc join CategoryEntity c on rc.categoryId.Id = c.Id where c.uuid =   :uuid")
 })
 
 
-public class RestaurantCategory {
+public class RestaurantCategoryEntity {
 
   @Id
   @Column(name = "id")

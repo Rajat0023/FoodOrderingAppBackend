@@ -1,9 +1,8 @@
 package com.upgrad.FoodOrderingApp.service.dao;
 
-//import com.upgrad.FoodOrderingApp.service.entity.Category;
 import com.upgrad.FoodOrderingApp.service.entity.CategoryEntity;
-import com.upgrad.FoodOrderingApp.service.entity.CategoryItem;
-import com.upgrad.FoodOrderingApp.service.entity.RestaurantCategory;
+import com.upgrad.FoodOrderingApp.service.entity.CategoryItemEntity;
+import com.upgrad.FoodOrderingApp.service.entity.RestaurantCategoryEntity;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -62,9 +61,9 @@ public class CategoryDao {
      * This method fetches the category for the given restaurantId from the database
      */
 
-    public List<RestaurantCategory> getCategoryByRestaurant(Integer restaurantId){
+    public List<RestaurantCategoryEntity> getCategoryByRestaurant(Integer restaurantId){
 
-        TypedQuery<RestaurantCategory> query = entityManager.createNamedQuery("getCategoryByRestaurant", RestaurantCategory.class);
+        TypedQuery<RestaurantCategoryEntity> query = entityManager.createNamedQuery("getCategoryByRestaurant", RestaurantCategoryEntity.class);
         query.setParameter("restaurantId",restaurantId);
         return query.getResultList();
     }
@@ -72,9 +71,9 @@ public class CategoryDao {
     /**
      * This method fetches the items for the given categoryId from the database
      */
-    public List<CategoryItem> getItemByCategoryId(String uuid){
+    public List<CategoryItemEntity> getItemByCategoryId(String uuid){
 
-        TypedQuery<CategoryItem> query = entityManager.createNamedQuery("getItemByCategory",CategoryItem.class);
+        TypedQuery<CategoryItemEntity> query = entityManager.createNamedQuery("getItemByCategory",CategoryItemEntity.class);
         query.setParameter("uuid",uuid);
         return query.getResultList();
     }

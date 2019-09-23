@@ -2,7 +2,7 @@ package com.upgrad.FoodOrderingApp.service.dao;
 
 import com.upgrad.FoodOrderingApp.service.entity.CategoryEntity;
 import com.upgrad.FoodOrderingApp.service.entity.ItemEntity;
-import com.upgrad.FoodOrderingApp.service.entity.RestaurantCategory;
+import com.upgrad.FoodOrderingApp.service.entity.RestaurantCategoryEntity;
 import com.upgrad.FoodOrderingApp.service.entity.RestaurantEntity;
 import org.springframework.stereotype.Repository;
 
@@ -14,7 +14,6 @@ import java.util.List;
 import java.util.UUID;
 
 @Repository
-
 public class RestaurantDao {
 
     @PersistenceContext
@@ -64,9 +63,9 @@ public class RestaurantDao {
         return categoryList;
     }
 
-    public List<RestaurantCategory> getCategoryByRestaurant(Integer restaurantId) {
+    public List<RestaurantCategoryEntity> getCategoryByRestaurant(Integer restaurantId) {
 
-        TypedQuery<RestaurantCategory> query = entityManager.createNamedQuery("getCategoryByRestaurant", RestaurantCategory.class);
+        TypedQuery<RestaurantCategoryEntity> query = entityManager.createNamedQuery("getCategoryByRestaurant", RestaurantCategoryEntity.class);
         query.setParameter("restaurantId", restaurantId);
         return query.getResultList();
     }
@@ -75,10 +74,10 @@ public class RestaurantDao {
      * This method fetches all the restaurant by given categoryId
      */
 
-    public List<RestaurantCategory> getRestaurantByCategoryId(String uuid) {
-        List<RestaurantCategory> restaurantList = null;
-        TypedQuery<RestaurantCategory> query =
-                entityManager.createNamedQuery("findRestaurantByCategoryId", RestaurantCategory.class);
+    public List<RestaurantCategoryEntity> getRestaurantByCategoryId(String uuid) {
+        List<RestaurantCategoryEntity> restaurantList = null;
+        TypedQuery<RestaurantCategoryEntity> query =
+                entityManager.createNamedQuery("findRestaurantByCategoryId", RestaurantCategoryEntity.class);
         query.setParameter("uuid", uuid);
         restaurantList = query.getResultList();
         return restaurantList;
@@ -135,16 +134,14 @@ public class RestaurantDao {
         query.setParameter("uuid", restaurantId);
 
         RestaurantEntity r = query.getSingleResult();
-        BigDecimal existingRating = r.getCustomerRating();
+        BigDecimal existingRating = BigDecimal.valueOf(r.getCustomerRating());
         Integer numberOfCustomers = r.getNumberOfCustomersRated();
 
         BigDecimal total = existingRating.multiply(new BigDecimal(numberOfCustomers));
         BigDecimal a = total.add(customerRating);
         BigDecimal b= new BigDecimal(numberOfCustomers+1);
         BigDecimal newRating = a.divide(b,2, RoundingMode.HALF_UP);
-        //BigDecimal newRating = (total.add(customerRating)).divide(new BigDecimal(numberOfCustomers + 1));
-
-        r.setCustomerRating(newRating);
+        r.setCustomerRating(newRating.doubleValue());
         r.setNumberOfCustomersRated(++numberOfCustomers);
 
         entityManager.persist(r);

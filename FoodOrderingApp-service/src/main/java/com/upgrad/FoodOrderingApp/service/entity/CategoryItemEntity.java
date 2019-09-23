@@ -10,10 +10,10 @@ import javax.validation.constraints.NotNull;
 @NamedQueries({
         @NamedQuery(
                 name = "getItemByCategory",
-                query = "select c from CategoryItem c join ItemEntity i on c.itemId.Id = i.Id where c.categoryId.uuid = :uuid"
+                query = "select c from CategoryItemEntity c join ItemEntity i on c.itemId.Id = i.Id where c.categoryId.uuid = :uuid"
         )
 })
-public class CategoryItem {
+public class CategoryItemEntity {
 
     @Id
     @Column(name = "id")

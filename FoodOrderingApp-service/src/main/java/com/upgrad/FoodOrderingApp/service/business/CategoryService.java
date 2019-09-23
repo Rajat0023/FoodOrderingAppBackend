@@ -1,9 +1,9 @@
-package com.upgrad.FoodOrderingApp.service.businness;
+package com.upgrad.FoodOrderingApp.service.business;
 
 import com.upgrad.FoodOrderingApp.service.common.GenericExceptionCode;
 import com.upgrad.FoodOrderingApp.service.dao.CategoryDao;
 import com.upgrad.FoodOrderingApp.service.entity.CategoryEntity;
-import com.upgrad.FoodOrderingApp.service.entity.RestaurantCategory;
+import com.upgrad.FoodOrderingApp.service.entity.RestaurantCategoryEntity;
 import com.upgrad.FoodOrderingApp.service.exception.CategoryNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,11 +14,10 @@ import java.util.UUID;
 /** This service class manages all functionalities and business rules of category management */
 
 @Service
-
 public class CategoryService {
 
     @Autowired
-    CategoryDao categoryDao;
+    private CategoryDao categoryDao;
 
     /**
      * This method manages business rules for getting all categories ordered by name
@@ -55,7 +54,7 @@ public class CategoryService {
      *
      */
 
-    public List<RestaurantCategory> getCategoriesByRestaurant(String restaurantId) {
+    public List<RestaurantCategoryEntity> getCategoriesByRestaurant(String restaurantId) {
         return categoryDao.getCategoryByRestaurant(Integer.parseInt(restaurantId));
     }
 

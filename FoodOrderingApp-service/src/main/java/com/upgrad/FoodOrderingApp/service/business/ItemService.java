@@ -1,10 +1,12 @@
-package com.upgrad.FoodOrderingApp.service.businness;
+package com.upgrad.FoodOrderingApp.service.business;
 
 import com.upgrad.FoodOrderingApp.service.common.GenericExceptionCode;
 import com.upgrad.FoodOrderingApp.service.dao.CategoryDao;
+import com.upgrad.FoodOrderingApp.service.dao.ItemRepository;
 import com.upgrad.FoodOrderingApp.service.dao.RestaurantDao;
-import com.upgrad.FoodOrderingApp.service.entity.CategoryItem;
+import com.upgrad.FoodOrderingApp.service.entity.CategoryItemEntity;
 import com.upgrad.FoodOrderingApp.service.entity.ItemEntity;
+import com.upgrad.FoodOrderingApp.service.exception.ItemNotFoundException;
 import com.upgrad.FoodOrderingApp.service.exception.RestaurantNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,6 +25,10 @@ public class ItemService {
 
     @Autowired
     CategoryDao categoryDao;
+
+
+    @Autowired
+    private ItemRepository itemRepository;
 
     /**
      * This method manages business rules to get items by category and restaurant
@@ -44,7 +50,7 @@ public class ItemService {
      *
      */
 
-    public List<CategoryItem>getItemByCategory(String categoryId){
+    public List<CategoryItemEntity>getItemByCategory(String categoryId){
         return categoryDao.getItemByCategoryId((categoryId));
     }
 
@@ -61,5 +67,14 @@ public class ItemService {
                     GenericExceptionCode.RNF_001.getDescription());
         }
         return restaurantDao.getItemByPopular(uuid);
+    }
+
+    public ItemEntity getItemForItemId(String id) throws ItemNotFoundException {
+        ItemEntity itemEntity= itemRepository.getItemById(id);
+        if(itemEntity==null){
+            throw new ItemNotFoundException("INF-003","No item by this id exist");
+        }
+        return itemEntity;
+
     }
 }

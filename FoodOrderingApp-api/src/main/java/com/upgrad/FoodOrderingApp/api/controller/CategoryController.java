@@ -1,10 +1,10 @@
 package com.upgrad.FoodOrderingApp.api.controller;
 
 import com.upgrad.FoodOrderingApp.api.model.*;
-import com.upgrad.FoodOrderingApp.service.businness.CategoryService;
-import com.upgrad.FoodOrderingApp.service.businness.ItemService;
+import com.upgrad.FoodOrderingApp.service.business.CategoryService;
+import com.upgrad.FoodOrderingApp.service.business.ItemService;
 import com.upgrad.FoodOrderingApp.service.entity.CategoryEntity;
-import com.upgrad.FoodOrderingApp.service.entity.CategoryItem;
+import com.upgrad.FoodOrderingApp.service.entity.CategoryItemEntity;
 import com.upgrad.FoodOrderingApp.service.exception.CategoryNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -83,7 +83,7 @@ public class CategoryController {
             categoryList.setId(UUID.fromString(category.getUuid()));
 
             List<ItemList> itemLists = new ArrayList<>();
-            for(CategoryItem categoryItem : itemService.getItemByCategory(categoryId)){
+            for(CategoryItemEntity categoryItem : itemService.getItemByCategory(categoryId)){
 
                 ItemList itemList = new ItemList();
                 ItemList.ItemTypeEnum itemTypeEnum = null;

@@ -1,9 +1,10 @@
-package com.upgrad.FoodOrderingApp.service.businness;
+package com.upgrad.FoodOrderingApp.service.business;
 
 import com.upgrad.FoodOrderingApp.service.common.GenericExceptionCode;
 import com.upgrad.FoodOrderingApp.service.dao.CategoryDao;
 import com.upgrad.FoodOrderingApp.service.dao.CustomerDao;
 import com.upgrad.FoodOrderingApp.service.dao.RestaurantDao;
+import com.upgrad.FoodOrderingApp.service.dao.RestaurentRepository;
 import com.upgrad.FoodOrderingApp.service.entity.*;
 import com.upgrad.FoodOrderingApp.service.exception.CategoryNotFoundException;
 import com.upgrad.FoodOrderingApp.service.exception.InvalidRatingException;
@@ -26,6 +27,9 @@ public class RestaurantService {
 
     @Autowired
     private RestaurantDao restaurantDao;
+
+    @Autowired
+    private RestaurentRepository restaurentRepository;
 
     @Autowired
     private CustomerDao customerDao;
@@ -66,7 +70,7 @@ public class RestaurantService {
      *
      */
 
-    public List<RestaurantCategory> restaurantByCategory(String categoryId) throws CategoryNotFoundException {
+    public List<RestaurantCategoryEntity> restaurantByCategory(String categoryId) throws CategoryNotFoundException {
         if (categoryId.isEmpty()) {
             throw new CategoryNotFoundException(
                     GenericExceptionCode.CNF_001.getCode(),
@@ -84,7 +88,7 @@ public class RestaurantService {
      * This method manages business rules to get restaurant by their input uuid
      *
      */
-    public List<RestaurantEntity> restaurantByUUID(String someRestaurantId) throws RestaurantNotFoundException {
+    public List<RestaurantEntity> restaurantUUID(String someRestaurantId) throws RestaurantNotFoundException {
 
         if (someRestaurantId.isEmpty()) {
             throw new RestaurantNotFoundException(
@@ -97,6 +101,18 @@ public class RestaurantService {
         }
         return restaurantDao.restaurantByUUID(someRestaurantId);
     }
+
+    public RestaurantEntity restaurantByUUID(String id) throws RestaurantNotFoundException {
+
+
+        RestaurantEntity restaurantEntity = restaurentRepository.getRestaurent(id);
+        if (restaurantEntity == null) {
+            throw new RestaurantNotFoundException("RNF-001", "No restaurant by this id");
+        }
+
+        return restaurantEntity;
+    }
+
 
     /**
      * This method manages business rules to update restaurant rating

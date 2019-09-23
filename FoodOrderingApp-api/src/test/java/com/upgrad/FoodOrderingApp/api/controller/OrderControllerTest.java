@@ -618,9 +618,9 @@ public class OrderControllerTest {
         final String restaurantId = UUID.randomUUID().toString();
         restaurantEntity.setUuid(restaurantId);
         restaurantEntity.setAddress(addressEntity);
-        restaurantEntity.setAvgPrice(123);
+        restaurantEntity.setAveragePriceForTwo(123);
         restaurantEntity.setCustomerRating(3.4);
-        restaurantEntity.setNumberCustomersRated(200);
+        restaurantEntity.setNumberOfCustomersRated(200);
         restaurantEntity.setPhotoUrl("someurl");
         restaurantEntity.setRestaurantName("Famous RestaurantEntity");
 
