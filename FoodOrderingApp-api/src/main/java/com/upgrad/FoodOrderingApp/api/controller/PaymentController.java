@@ -5,7 +5,6 @@ import com.upgrad.FoodOrderingApp.api.model.PaymentResponse;
 import com.upgrad.FoodOrderingApp.service.business.CustomerService;
 import com.upgrad.FoodOrderingApp.service.business.PaymentService;
 import com.upgrad.FoodOrderingApp.service.entity.PaymentEntity;
-import com.upgrad.FoodOrderingApp.service.exception.AuthorizationFailedException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;

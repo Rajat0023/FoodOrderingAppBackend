@@ -93,4 +93,28 @@ public class RestExceptionHandler {
     errorResponse.setMessage(e.getErrorMessage());
     return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
   }
+
+  @ExceptionHandler(CategoryNotFoundException.class)
+  public ResponseEntity<ErrorResponse> handleCategoryNotFoundException(
+      CategoryNotFoundException exe, WebRequest request) {
+    return new ResponseEntity<ErrorResponse>(
+        new ErrorResponse().code(exe.getCode()).message(exe.getErrorMessage()),
+        HttpStatus.NOT_FOUND);
+  }
+
+  @ExceptionHandler(InvalidRatingException.class)
+  public ResponseEntity<ErrorResponse> invalidRatingException(
+      InvalidRatingException exe, WebRequest request) {
+    return new ResponseEntity<ErrorResponse>(
+        new ErrorResponse().code(exe.getCode()).message(exe.getErrorMessage()),
+        HttpStatus.BAD_REQUEST);
+  }
+
+  @ExceptionHandler(CustomerNotFoundException.class)
+  public ResponseEntity<ErrorResponse> handleCategoryNotFoundException(
+      CustomerNotFoundException exe, WebRequest request) {
+    return new ResponseEntity<ErrorResponse>(
+        new ErrorResponse().code(exe.getCode()).message(exe.getErrorMessage()),
+        HttpStatus.NOT_FOUND);
+  }
   }

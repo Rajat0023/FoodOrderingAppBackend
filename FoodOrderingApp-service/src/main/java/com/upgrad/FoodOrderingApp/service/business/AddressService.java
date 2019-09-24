@@ -27,6 +27,14 @@ public class AddressService {
     return stateEntity;
   }
 
+  /**
+   * This method performs validations and passes the address Entity to the DAO class to save
+   *
+   * @param address
+   * @param customer
+   * @return AddressEntity
+   * @throws SaveAddressException
+   */
   public AddressEntity saveAddress(AddressEntity address, CustomerEntity customer)
       throws SaveAddressException {
     if (address.getFlatBuilNo().equals("")
@@ -55,6 +63,14 @@ public class AddressService {
     return createdAddress;
   }
 
+  /**
+   * This method performs validations and fetches the address from the DAO class by UUID
+   * @param addressUuid
+   * @param customerEntity
+   * @return AddressEntity
+   * @throws AddressNotFoundException
+   * @throws AuthorizationFailedException
+   */
   public AddressEntity getAddressByUUID(String addressUuid, CustomerEntity customerEntity)
       throws AddressNotFoundException, AuthorizationFailedException {
     AddressEntity addressEntity = addressDao.getAddressByUuid(addressUuid);
@@ -101,6 +117,10 @@ public class AddressService {
     return addressEntityList;
   }
 
+  /**
+   * This method retrieves the List of state entities
+   * @return List of State Entity
+   */
     public List<StateEntity> getAllStates() {
       if (addressDao.findAllStates() == null){
           return Collections.emptyList();
