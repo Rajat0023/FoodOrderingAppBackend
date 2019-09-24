@@ -208,5 +208,4 @@ public class CustomerController {
             .status("CUSTOMER PASSWORD UPDATED SUCCESSFULLY");
     return new ResponseEntity<UpdatePasswordResponse>(updatePasswordResponse,HttpStatus.OK);
   }
-
     }

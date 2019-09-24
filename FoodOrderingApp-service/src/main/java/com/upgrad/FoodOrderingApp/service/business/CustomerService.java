@@ -135,7 +135,7 @@ public class CustomerService {
     }
 
     /**
-     *
+     * This method updates the Customer Details
      * @param authorization
      * @param newCustomer
      * @return CustomerEntity

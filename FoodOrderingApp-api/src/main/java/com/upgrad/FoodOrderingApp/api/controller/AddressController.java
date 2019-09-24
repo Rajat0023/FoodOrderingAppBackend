@@ -28,6 +28,17 @@ public class AddressController {
 
   @Autowired private AddressService addressService;
 
+  /**
+   * This method accepts an HTTP Request of POST type, JSON fields and saves the address of the customer on
+   * successful authentication. Produces a JSON response
+   *
+   * @param saveAddressRequest
+   * @param authorization
+   * @return SaveAddressResponse in a ResponseEntity object with HTTP Status
+   * @throws AuthorizationFailedException
+   * @throws AddressNotFoundException
+   * @throws SaveAddressException
+   */
   @PostMapping(
       value = "/address",
       consumes = MediaType.APPLICATION_JSON_UTF8_VALUE,
@@ -59,6 +70,12 @@ public class AddressController {
     return new ResponseEntity<SaveAddressResponse>(saveAddressResponse, HttpStatus.CREATED);
   }
 
+  /**
+   * This method
+   * @param authorization
+   * @return  AddressListResponse
+   * @throws AuthorizationFailedException
+   */
   @GetMapping(value = "/address/customer", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
   public ResponseEntity<AddressListResponse> getCustomerAddress(
       @RequestHeader("authorization") final String authorization)
@@ -89,6 +106,16 @@ public class AddressController {
     return new ResponseEntity<AddressListResponse>(addressListResponse, HttpStatus.OK);
   }
 
+  /**
+   * This method accepts a HTTP Request of DELETE type, address UUID of the address to be deleted and
+   * deletes that specific address after the user is authenticated successfully
+   *
+   * @param authorization
+   * @param addressUuid
+   * @return DeleteAddressResponse
+   * @throws AuthorizationFailedException
+   * @throws AddressNotFoundException
+   */
   @DeleteMapping(value = "/address/{address_id}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
   public ResponseEntity<DeleteAddressResponse> deleteCustomerAddress(
       @RequestHeader("authorization") final String authorization,
@@ -110,6 +137,10 @@ public class AddressController {
     return new ResponseEntity<DeleteAddressResponse>(deleteAddressResponse, HttpStatus.OK);
   }
 
+  /**
+   * This method accepts an HTTP Request of GET and fetches the list of all states as JSON response
+   * @return StatesListResponse
+   */
   @GetMapping(value = "/states", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
   public ResponseEntity<StatesListResponse> getStates() {
     List<StateEntity> stateEntities = addressService.getAllStates();

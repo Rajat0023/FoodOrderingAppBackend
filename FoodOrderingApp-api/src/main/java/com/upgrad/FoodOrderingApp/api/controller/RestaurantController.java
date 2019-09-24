@@ -24,6 +24,7 @@ import static org.springframework.web.bind.annotation.RequestMethod.PUT;
  * functionalities
  */
 @RestController
+@CrossOrigin(value = "*", maxAge = 1L)
 public class RestaurantController {
 
   @Autowired RestaurantService restaurantService;
@@ -150,7 +151,7 @@ public class RestaurantController {
   /**
    * This method is used to handle http request of user to get restaurants by given categoryId
    *
-   * @return returns ResponseEntity enbedded with model object or error object
+   * @return returns ResponseEntity embedded with model object or error object
    * @throws CategoryNotFoundException
    */
   @RequestMapping(
